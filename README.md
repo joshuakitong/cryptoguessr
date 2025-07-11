@@ -2,7 +2,7 @@
 
 This is a cryptocurrency-themed game built with **Next.js**, **Tailwind CSS**, **Node.js**, the **CoinGeck API**, and **AWS**.
 
-Live: [View Site](https://joshuakitong.github.io/cryptoguessr)
+Live: [View Site](https://cryptoguessr-amber.vercel.app)
 
 <details>
   <summary><strong>How to Run Locally</strong></summary>
