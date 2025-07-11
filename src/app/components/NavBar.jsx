@@ -34,7 +34,7 @@ export default function Navbar() {
   return (
     <>
       <div className="top-0 left-0 w-full">
-        <div className="max-w-screen-full mx-auto flex items-center justify-between px-2 md:px-8 lg:px-52 py-6">
+        <div className="w-full max-w-full flex items-center justify-between px-4 sm:px-8 lg:px-52 py-6">
           <button
             onClick={() => setOpen(true)}
             className="text-white p-2 cursor-pointer hover:text-[#f7931a] transition-colors"
