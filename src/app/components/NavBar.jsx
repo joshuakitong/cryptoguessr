@@ -70,7 +70,10 @@ export default function Navbar() {
 
           {showLoginButton ? (
             <div className="w-[44px]">
-              <button className="bg-[#f7931a] hover:bg-[#e98209] text-white font-bold px-6 py-2 -ml-[44px] rounded-md cursor-pointer transition">
+              <button 
+                className="bg-[#f7931a] hover:bg-[#e98209] text-white font-bold px-6 py-2 -ml-[44px] rounded-md cursor-pointer transition"
+                onClick={() => alert("This feature is coming soon!")}
+              >
                 Login
               </button>
             </div>
@@ -133,19 +136,22 @@ export default function Navbar() {
             <Link
               className="text-semibold text-lg hover:text-[#f7931a] transition-colors"
               href="/"
-              onClick={() => setOpen(false)}
+              onClick={() => alert("This feature is coming soon!")}
             >
               Settings
             </Link>
             <Link
               className="text-semibold text-lg hover:text-[#f7931a] transition-colors"
               href="/"
-              onClick={() => setOpen(false)}
+              onClick={() => alert("This feature is coming soon!")}
             >
               Leaderboards
             </Link>
           </nav>
-          <button className="w-full bg-[#f7931a] hover:bg-[#e98209] text-white font-bold px-6 py-2 rounded-md cursor-pointer transition">
+          <button
+            className="w-full bg-[#f7931a] hover:bg-[#e98209] text-white font-bold px-6 py-2 rounded-md cursor-pointer transition"
+            onClick={() => alert("This feature is coming soon!")}
+          >
             Login
           </button>
         </div>
@@ -154,7 +160,7 @@ export default function Navbar() {
       {open && (
         <div
           onClick={() => setOpen(false)}
-          className="fixed inset-0 z-20 bg-black/30 backdrop-blur-[2px]"
+          className="fixed inset-0 z-20 bg-black/30 backdrop-blur-[2px] transition-opacity"
         ></div>
       )}
     </>
