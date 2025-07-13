@@ -105,21 +105,21 @@ export default function Navbar() {
 
           <nav className="flex flex-col p-4 space-y-4">
             <Link
-              className="text-semibold text-lg p-2 border-2 border-white rounded-md hover:text-[#f7931a] hover:border-[#f7931a] hover:scale-105 transition-all"
+              className="text-semibold text-lg p-2 border-1 border-white rounded-md hover:text-[#f7931a] hover:border-[#f7931a] hover:scale-105 transition-all"
               href="/coinguessr"
               onClick={() => setOpen(false)}
             >
               CoinGuessr
             </Link>
             <Link
-              className="text-semibold text-lg p-2 border-2 border-white rounded-md hover:text-[#f7931a] hover:border-[#f7931a] hover:scale-105 transition-all"
+              className="text-semibold text-lg p-2 border-1 border-white rounded-md hover:text-[#f7931a] hover:border-[#f7931a] hover:scale-105 transition-all"
               href="/bitpredict"
               onClick={() => setOpen(false)}
             >
               BitPredict
             </Link>
             <Link
-              className="text-semibold text-lg p-2 border-2 border-white rounded-md hover:text-[#f7931a] hover:border-[#f7931a] hover:scale-105 transition-all"
+              className="text-semibold text-lg p-2 border-1 border-white rounded-md hover:text-[#f7931a] hover:border-[#f7931a] hover:scale-105 transition-all"
               href="/higherlower"
               onClick={() => setOpen(false)}
             >
