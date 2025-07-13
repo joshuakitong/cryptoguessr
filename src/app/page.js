@@ -1,15 +1,15 @@
 import Link from "next/link";
 
 const games = [
-  { title: "CoinGuessr", href: "/coin-guessr" },
-  { title: "Price Prediction", href: "/price-prediction" },
-  { title: "Higher/Lower", href: "/higher-or-lower" },
+  { title: "CoinGuessr", href: "/coinguessr" },
+  { title: "BitPredict", href: "/bitpredict" },
+  { title: "Higher/Lower", href: "/higherlower" },
 ];
 
 export default function Home() {
   return (
-    <main className="min-h-screen/2 px-4 sm:px-8 md:px-8 lg:px-52 pb-4 text-white md:mt-42 sm:mt-0">
-      <div className="w-full max-w-7xl mx-auto text-center">
+    <main className="min-h-screen/2 px-4 md:mt-42 sm:mt-0">
+      <div className="w-full mx-auto text-center">
         <h1 className="text-4xl md:text-6xl font-bold mb-6 md:mb-12 sm:mb-6">CryptoGuessr</h1>
 
         <div className="flex justify-center">
