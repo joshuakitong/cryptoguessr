@@ -45,7 +45,7 @@ export default function CoinGuessrPage() {
 
       if (allLettersGuessed) {
         const newSessionScore = sessionScore + 100;
-        const newLives = Math.min(lives + 1, 10);
+        const newLives = currentIndex === coinNames.length - 1 ? lives : Math.min(lives + 3, 10);
 
         setSessionScore(newSessionScore);
         setLives(newLives);
@@ -54,10 +54,7 @@ export default function CoinGuessrPage() {
         setTimeout(() => {
           if (currentIndex === coinNames.length - 1) {
             const updatedTotal = totalScore + newSessionScore + newLives * 100;
-            setTotalScore(updatedTotal);
-            setLocalState("score", updatedTotal);
-            setGameOver(true);
-            setShowGameOverModal(true);
+            gameOverState(updatedTotal);
           } else {
             setCurrentIndex((i) => i + 1);
             setGuessedLetters([]);
@@ -71,12 +68,16 @@ export default function CoinGuessrPage() {
 
       if (newLives <= 0) {
         const updatedTotal = totalScore + sessionScore;
-        setTotalScore(updatedTotal);
-        setLocalState("score", updatedTotal);
-        setGameOver(true);
-        setShowGameOverModal(true);
+        gameOverState(updatedTotal);
       }
     }
+  };
+
+  const gameOverState = (updatedTotal) => {
+    setTotalScore(updatedTotal);
+    setLocalState("score", updatedTotal);
+    setGameOver(true);
+    setShowGameOverModal(true);
   };
 
   const resetGame = () => {
