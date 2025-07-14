@@ -26,7 +26,7 @@ export default function CoinGuessrPage() {
 
   useEffect(() => {
     fetchRandomCoins().then((data) => {
-      console.log("Fetched coins:", data);
+      //console.log("Fetched coins:", data);
       setCoinNames(data);
     });
   }, []);
