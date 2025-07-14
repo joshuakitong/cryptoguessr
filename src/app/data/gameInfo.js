@@ -26,7 +26,7 @@ Bonus:
 `;
 
 export const higherGainsGameInfo = `
-Guess which cryptocurrency ranks higher or lower based on one of the following metrics: current price, 24-hour, 7-day, 1-month, or 1-year gain.
+Guess which cryptocurrency ranks higher based on one of the following metrics: current price, 24-hour, 7-day, 1-month, or 1-year gain.
 
 Mechanics:
 - Start with 5 lives.
