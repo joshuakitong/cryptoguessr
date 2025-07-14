@@ -19,10 +19,10 @@ Mechanics:
 - Start with 5 lives.
 - Each correct prediction earns +50 points.
 - Wrong predictions don’t cost points, but don’t gain you any either.
-- Game ends when you lose all lives or get 1000 points.
+- Game ends when you lose all lives or get 20 correct predictions.
 
 Bonus:
-- Reach 1000 points to earn a bonus: +100 points for each remaining life.
+- Get 20 correct predictions to earn a bonus: +100 points for each remaining life.
 `;
 
 export const higherGainsGameInfo = `
@@ -32,8 +32,8 @@ Mechanics:
 - Start with 5 lives.
 - Each correct answer earns +50 points.
 - Wrong guesses cost 1 life.
-- Game ends when you lose all lives or get 1000 points.
+- Game ends when you lose all lives or complete all 20 rounds.
 
 Bonus:
-- Reach 1000 points to earn a bonus: +100 points for each remaining life.
+- Complete 20 rounds to earn a bonus: +100 points for each remaining life.
 `;
