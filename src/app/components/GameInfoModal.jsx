@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { X } from "lucide-react";
 
-export default function GameInfoModal({ show, onClose, info }) {
+export default function GameInfoModal({ show, onClose, info, title }) {
   useEffect(() => {
     const handleEsc = (e) => {
       if (e.key === "Escape") onClose();
@@ -29,7 +29,7 @@ export default function GameInfoModal({ show, onClose, info }) {
         >
           <X size={24} />
         </button>
-        <h2 className="text-2xl font-bold mb-4">How to Play</h2>
+        <h2 className="text-2xl font-bold mb-4 text-center">How to Play {title}</h2>
         <p className="mb-2 whitespace-pre-line">{info}</p>
       </div>
     </div>
