@@ -17,6 +17,8 @@ export default function Keyboard({ onGuess, guessedLetters, disabled, coinName }
 
   useEffect(() => {
     const handleKeyDown = (e) => {
+      if (e.ctrlKey || e.altKey) return;
+
       const letter = e.key.toUpperCase();
       if (letter.length === 1 && /[A-Z]/.test(letter)) {
         handleClick(letter);
@@ -33,7 +35,7 @@ export default function Keyboard({ onGuess, guessedLetters, disabled, coinName }
   }, [guessedLetters, disabled]);
 
   return (
-    <div className="flex justify-center items-center w-full h-[250px] sm:h-[300px] md:h-[350px]">
+    <div className="flex justify-center items-center w-full h-[150px] sm:h-[150px] md:h-[350px] lg:h-[400px]">
       <div className="scale-[0.85] sm:scale-100 transition-transform space-y-2">
         {KEYS.map((row, rowIndex) => (
           <div key={rowIndex} className="flex justify-center gap-1">
