@@ -160,7 +160,7 @@ export default function Navbar() {
             </Link>
             <Link
               className="text-semibold text-lg p-2 border-1 border-white rounded-md hover:text-[#f7931a] hover:border-[#f7931a] hover:scale-105 transition-all"
-              href="/higherGains"
+              href="/highergains"
               onClick={() => setOpen(false)}
             >
               Higher Gains
