@@ -157,12 +157,12 @@ export default function Navbar() {
         </div>
       </div>
 
-      {open && (
-        <div
-          onClick={() => setOpen(false)}
-          className="fixed inset-0 z-20 bg-black/30 backdrop-blur-[2px] transition-opacity"
-        ></div>
-      )}
+      <div
+        onClick={() => setOpen(false)}
+        className={`fixed inset-0 z-20 transition-all duration-300 ${
+          open ? "bg-black/30 backdrop-blur-[2px] opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+      ></div>
     </>
   );
 }
