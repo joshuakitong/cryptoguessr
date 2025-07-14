@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Menu, X, Info } from "lucide-react";
 import GameInfoModal from "@/app/components/GameInfoModal";
-import { coinGuessrGameInfo } from "@/app/data/gameInfo";
+import { coinGuessrGameInfo, bitcoinPredictGameInfo, higherGainsGameInfo } from "@/app/data/gameInfo";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -13,22 +13,36 @@ export default function Navbar() {
   const pathname = usePathname();
 
   const isHomePage = pathname === "/";
-  const isGamePage = ["/coinguessr", "/bitpredict", "/higherlower"].includes(pathname);
+  const isGamePage = ["/coinguessr", "/bitcoinpredict", "/highergains"].includes(pathname);
   const showLoginButton = isHomePage;
+
   function getPageTitle(pathname) {
     switch (pathname) {
       case "/":
         return "";
       case "/coinguessr":
         return "CoinGuessr";
-      case "/bitpredict":
-        return "BitPredict";
-      case "/higherlower":
-        return "Higher/Lower";
+      case "/bitcoinpredict":
+        return "Bitcoin Predict";
+      case "/highergains":
+        return "Higher Gains";
       default:
         return "";
     }
   }
+
+  function getGameInfo(pathname) {
+  switch (pathname) {
+    case "/coinguessr":
+      return coinGuessrGameInfo;
+    case "/bitcoinpredict":
+      return bitcoinPredictGameInfo;
+    case "/highergains":
+      return higherGainsGameInfo;
+    default:
+      return "";
+  }
+}
 
   const title = getPageTitle(pathname);
 
@@ -101,7 +115,8 @@ export default function Navbar() {
         <GameInfoModal
           show={showInfo}
           onClose={() => setShowInfo(false)}
-          info={coinGuessrGameInfo}
+          info={getGameInfo(pathname)}
+          title={title}
         />
       </div>
 
@@ -138,17 +153,17 @@ export default function Navbar() {
             </Link>
             <Link
               className="text-semibold text-lg p-2 border-1 border-white rounded-md hover:text-[#f7931a] hover:border-[#f7931a] hover:scale-105 transition-all"
-              href="/bitpredict"
+              href="/bitcoinpredict"
               onClick={() => setOpen(false)}
             >
-              BitPredict
+              Bitcoin Predict
             </Link>
             <Link
               className="text-semibold text-lg p-2 border-1 border-white rounded-md hover:text-[#f7931a] hover:border-[#f7931a] hover:scale-105 transition-all"
-              href="/higherlower"
+              href="/higherGains"
               onClick={() => setOpen(false)}
             >
-              Higher/Lower
+              Higher Gains
             </Link>
           </nav>
         </div>
