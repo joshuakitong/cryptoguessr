@@ -9,5 +9,31 @@ Mechanics:
 - Game ends when you lose all lives or complete all 10 coins.
 
 Bonus:
-- Finish all coins to earn a bonus: +100 points per remaining life.
+- Complete all 10 coins to earn a bonus: +100 points for each remaining life.
+`;
+
+export const bitcoinPredictGameInfo = `
+Predict whether the price of Bitcoin will go up or down in the next 30 seconds.
+
+Mechanics:
+- Start with 5 lives.
+- Each correct prediction earns +50 points.
+- Wrong predictions don’t cost points, but don’t gain you any either.
+- Game ends when you lose all lives or get 1000 points.
+
+Bonus:
+- Reach 1000 points to earn a bonus: +100 points for each remaining life.
+`;
+
+export const higherGainsGameInfo = `
+Guess which cryptocurrency ranks higher or lower based on one of the following metrics: current price, 24-hour, 7-day, 1-month, or 1-year gain.
+
+Mechanics:
+- Start with 5 lives.
+- Each correct answer earns +50 points.
+- Wrong guesses cost 1 life.
+- Game ends when you lose all lives or get 1000 points.
+
+Bonus:
+- Reach 1000 points to earn a bonus: +100 points for each remaining life.
 `;
