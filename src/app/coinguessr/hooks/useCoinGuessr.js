@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { fetchRandomCoins } from "../utils/fetchRandomCoins";
+import { fetchCoinGuessrCoins } from "../utils/fetchCoinGuessrCoins";
 import { getRandomCoinName } from "../utils/getRandomCoinName";
 import { loadGameState, saveGameState, clearGameState } from "@/utils/saveLoadUtils";
 
@@ -37,7 +37,7 @@ export default function useCoinGuessr() {
   }, [coins, currentCoin, guessedLetters, lives, score, gameOver]);
 
   const initializeGame = async () => {
-    const fetched = await fetchRandomCoins();
+    const fetched = await fetchCoinGuessrCoins();
     setCoins(fetched);
     setCurrentCoin(getRandomCoinName(fetched));
     setGuessedLetters([]);

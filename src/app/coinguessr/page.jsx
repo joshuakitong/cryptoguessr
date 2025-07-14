@@ -7,7 +7,7 @@ import Keyboard from "./components/Keyboard";
 import Lives from "@/app/components/Lives";
 import Score from "@/app/components/Score";
 import GameOverModal from "@/app/components/GameOverModal";
-import { fetchRandomCoins } from "./utils/fetchRandomCoins";
+import { fetchCoinGuessrCoins } from "./utils/fetchCoinGuessrCoins";
 import { getLocalState, setLocalState } from "@/app/utils/saveLoadUtils";
 
 export default function CoinGuessrPage() {
@@ -25,7 +25,7 @@ export default function CoinGuessrPage() {
   const closeModal = () => setShowGameOverModal(false);
 
   useEffect(() => {
-    fetchRandomCoins().then((data) => {
+    fetchCoinGuessrCoins().then((data) => {
       //console.log("Fetched coins:", data);
       setCoinNames(data);
     });
