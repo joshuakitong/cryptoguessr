@@ -7,7 +7,6 @@ import GameInfoModal from "@/app/components/GameInfoModal";
 import { coinGuessrGameInfo } from "@/app/data/gameInfo";
 
 export default function Navbar() {
-  console.log(coinGuessrGameInfo);
   const [open, setOpen] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
   const navRef = useRef(null);
