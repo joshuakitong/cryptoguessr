@@ -2,10 +2,14 @@
 import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Info } from "lucide-react";
+import GameInfoModal from "@/app/components/GameInfoModal";
+import { coinGuessrGameInfo } from "@/app/data/gameInfo";
 
 export default function Navbar() {
+  console.log(coinGuessrGameInfo);
   const [open, setOpen] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
   const navRef = useRef(null);
   const pathname = usePathname();
 
@@ -69,18 +73,37 @@ export default function Navbar() {
           </h1>
 
           {showLoginButton ? (
-            <div className="w-[44px]">
+            <div className="flex gap-2 items-center">
               <button 
-                className="bg-[#f7931a] hover:bg-[#e98209] text-white font-bold px-6 py-2 -ml-[44px] rounded-md cursor-pointer transition"
+                className="bg-[#f7931a] hover:bg-[#e98209] text-white font-bold px-6 py-2 rounded-md cursor-pointer transition"
                 onClick={() => alert("This feature is coming soon!")}
               >
                 Login
               </button>
             </div>
           ) : (
-            <div className="w-[44px]" />
+            <>
+              {isGamePage ? (
+                <button
+                  className="flex items-center justify-center w-[44px] h-[44px] text-white hover:text-[#f7931a] cursor-pointer transition"
+                  onClick={() => setShowInfo(true)}
+                >
+                  <Info size={24} />
+                </button>
+              ) : (
+                <div className="w-[44px]" />
+              )}
+            </>
           )}
+
+          
         </div>
+
+        <GameInfoModal
+          show={showInfo}
+          onClose={() => setShowInfo(false)}
+          info={coinGuessrGameInfo}
+        />
       </div>
 
       <div
