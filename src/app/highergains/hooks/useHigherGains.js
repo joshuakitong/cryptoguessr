@@ -19,6 +19,7 @@ export default function useHigherGains() {
 
   useEffect(() => {
     fetchHigherGainsCoins().then((coins) => {
+      //console.log("Fetched coins:", fetchedCoins);
       setAllCoins(coins);
       if (coins.length >= 2) {
         const [c1, c2] = coins;
