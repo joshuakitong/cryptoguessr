@@ -22,8 +22,6 @@ export default function CoinGuessrPage() {
   const [showGameOverModal, setShowGameOverModal] = useState(false);
   const router = useRouter();
 
-  const closeModal = () => setShowGameOverModal(false);
-
   useEffect(() => {
     fetchCoinGuessrCoins().then((data) => {
       //console.log("Fetched coins:", data);
@@ -52,9 +50,8 @@ export default function CoinGuessrPage() {
         setIsRevealed(true);
 
         setTimeout(() => {
-          if (currentIndex === coinNames.length - 1) {
-            const updatedTotal = totalScore + newSessionScore + newLives * 100;
-            gameOverState(updatedTotal);
+          if (sessionScore >= 1000) {
+            gameOverState(totalScore + newSessionScore + newLives * 100);
           } else {
             setCurrentIndex((i) => i + 1);
             setGuessedLetters([]);
@@ -67,8 +64,7 @@ export default function CoinGuessrPage() {
       setLives(newLives);
 
       if (newLives <= 0) {
-        const updatedTotal = totalScore + sessionScore;
-        gameOverState(updatedTotal);
+        gameOverState(totalScore + sessionScore);
       }
     }
   };
@@ -116,10 +112,10 @@ export default function CoinGuessrPage() {
         sessionScore={sessionScore}
         bonusScore={lives * 100}
         totalScore={totalScore}
-        message={currentIndex === coinNames.length - 1 ? 'You won the game!' : `The answer is: ${currentCoin}`}
-        didWin={currentIndex === coinNames.length - 1 && lives > 0}
+        message={sessionScore >= 1000 ? 'You won the game!' : `The answer is: ${currentCoin}`}
+        didWin={sessionScore >= 1000}
         onRestart={resetGame}
-        onClose={closeModal}
+        onClose={() => setShowGameOverModal(false)}
       />}
     </div>
   );
