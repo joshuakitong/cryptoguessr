@@ -34,7 +34,7 @@ export default function HigherGainsPage() {
       <Lives currentLives={lives} totalLives={5} />
       <Score score={sessionScore} />
       <p className="text-center text-lg sm:text-2xl mb-2">
-        Which coin has higher <strong>{metric.label}</strong>?
+        Which coin has a higher <strong>{metric.label}</strong>?
       </p>
       <div className="w-full overflow-x-auto">
         <div className="flex justify-center gap-4 sm:scale-100 scale-90 py-4">
