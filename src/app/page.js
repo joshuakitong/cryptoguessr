@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const games = [
   { title: "CoinGuessr", href: "/coinguessr" },
-  { title: "Bitcoin Predict", href: "/bitcoinpredict" },
+  { title: "Bitdle", href: "/bitdle" },
   { title: "Gain Over", href: "/gainover" },
 ];
 

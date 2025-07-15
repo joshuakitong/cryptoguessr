@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Menu, X, Info } from "lucide-react";
 import GameInfoModal from "@/app/components/GameInfoModal";
-import { coinGuessrGameInfo, bitcoinPredictGameInfo, gainOverGameInfo } from "@/app/data/gameInfo";
+import { coinGuessrGameInfo, bitdleGameInfo, gainOverGameInfo } from "@/app/data/gameInfo";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -13,7 +13,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   const isHomePage = pathname === "/";
-  const isGamePage = ["/coinguessr", "/bitcoinpredict", "/gainover"].includes(pathname);
+  const isGamePage = ["/coinguessr", "/bitdle", "/gainover"].includes(pathname);
   const showLoginButton = isHomePage;
 
   function getPageTitle(pathname) {
@@ -22,8 +22,8 @@ export default function Navbar() {
         return "";
       case "/coinguessr":
         return "CoinGuessr";
-      case "/bitcoinpredict":
-        return "Bitcoin Predict";
+      case "/bitdle":
+        return "Bitdle";
       case "/gainover":
         return "Gain Over";
       default:
@@ -35,8 +35,8 @@ export default function Navbar() {
   switch (pathname) {
     case "/coinguessr":
       return coinGuessrGameInfo;
-    case "/bitcoinpredict":
-      return bitcoinPredictGameInfo;
+    case "/bitdle":
+      return bitdleGameInfo;
     case "/gainover":
       return gainOverGameInfo;
     default:
@@ -153,10 +153,10 @@ export default function Navbar() {
             </Link>
             <Link
               className="text-semibold text-lg p-2 border-1 border-white rounded-md hover:text-[#f7931a] hover:border-[#f7931a] hover:scale-105 transition-all"
-              href="/bitcoinpredict"
+              href="/bitdle"
               onClick={() => setOpen(false)}
             >
-              Bitcoin Predict
+              Bitdle
             </Link>
             <Link
               className="text-semibold text-lg p-2 border-1 border-white rounded-md hover:text-[#f7931a] hover:border-[#f7931a] hover:scale-105 transition-all"

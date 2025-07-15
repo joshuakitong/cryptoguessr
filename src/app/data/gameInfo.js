@@ -12,14 +12,14 @@ Bonus:
 - Complete all 10 coins to earn a bonus: +100 points for each remaining life.
 `;
 
-export const bitcoinPredictGameInfo = `
-Predict whether the price of Bitcoin will go up or down in the next 30 seconds.
+export const bitdleGameInfo = `
+Predict whether the next 1-minute Bitcoin candle will go up or down.
 
 Mechanics:
-- Start with 5 lives.
-- Each correct prediction earns +50 points.
+- Start with 3 lives.
+- Each correct prediction earns +100 points.
 - Wrong predictions don’t cost points, but don’t gain you any either.
-- Game ends when you lose all lives or get 20 correct predictions.
+- Game ends when you lose all lives or get 10 correct predictions.
 
 Bonus:
 - Get 20 correct predictions to earn a bonus: +100 points for each remaining life.
