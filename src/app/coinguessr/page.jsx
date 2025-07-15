@@ -31,7 +31,7 @@ export default function CoinGuessrPage() {
   }
 
   return (
-    <div className="flex flex-col items-center gap-4 p-4">
+    <div className="flex flex-col items-center gap-4 p-4 min-h-[calc(100vh-5.75rem)]">
       <Lives currentLives={lives} totalLives={10} />
       <Score score={sessionScore} />
       <CryptoNameDisplay
