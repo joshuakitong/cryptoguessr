@@ -18,7 +18,7 @@ Predict whether the next 1-minute Bitcoin candle will go up or down.
 Mechanics:
 - Start with 3 lives.
 - Each correct prediction earns +100 points.
-- Wrong predictions don’t cost points, but don’t gain you any either.
+- Wrong predictions cost 1 life.
 - Game ends when you lose all lives or get 10 correct predictions.
 
 Bonus:
