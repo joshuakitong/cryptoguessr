@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { fetchHigherGainsCoins } from "../utils/fetchHigherGainsCoins";
 import { getLocalState, setLocalState } from "@/app/utils/saveLoadUtils";
 import { getRandomValidMetric } from "../utils/metricUtils";
@@ -17,6 +18,7 @@ export default function useHigherGains() {
   const [revealed, setRevealed] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [showGameOverModal, setShowGameOverModal] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     fetchHigherGainsCoins().then((coins) => {
