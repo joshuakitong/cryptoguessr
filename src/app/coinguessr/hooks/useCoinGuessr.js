@@ -1,91 +1,89 @@
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { fetchCoinGuessrCoins } from "../utils/fetchCoinGuessrCoins";
-import { getRandomCoinName } from "../utils/getRandomCoinName";
-import { loadGameState, saveGameState, clearGameState } from "@/utils/saveLoadUtils";
+import { getLocalState, setLocalState } from "@/app/utils/saveLoadUtils";
 
 export default function useCoinGuessr() {
-  const [coins, setCoins] = useState([]);
-  const [currentCoin, setCurrentCoin] = useState("");
+  const [coinNames, setCoinNames] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [guessedLetters, setGuessedLetters] = useState([]);
-  const [lives, setLives] = useState(5);
-  const [score, setScore] = useState(0);
+  const [lives, setLives] = useState(10);
+  const [isRevealed, setIsRevealed] = useState(false);
+  const [sessionScore, setSessionScore] = useState(0);
+  const [totalScore, setTotalScore] = useState(() => getLocalState("score", 0));
   const [gameOver, setGameOver] = useState(false);
+  const [showGameOverModal, setShowGameOverModal] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
-    const stored = loadGameState("coinGuessr");
-    if (stored) {
-      setCoins(stored.coins);
-      setCurrentCoin(stored.currentCoin);
-      setGuessedLetters(stored.guessedLetters);
-      setLives(stored.lives);
-      setScore(stored.score);
-      setGameOver(stored.gameOver);
-    } else {
-      initializeGame();
-    }
+    fetchCoinGuessrCoins().then((data) => {
+      //console.log("Fetched coins:", data);
+      setCoinNames(data);
+    });
   }, []);
 
-  useEffect(() => {
-    saveGameState("coinGuessr", {
-      coins,
-      currentCoin,
-      guessedLetters,
-      lives,
-      score,
-      gameOver,
-    });
-  }, [coins, currentCoin, guessedLetters, lives, score, gameOver]);
+  const currentCoin = coinNames[currentIndex]?.toUpperCase() || "";
 
-  const initializeGame = async () => {
-    const fetched = await fetchCoinGuessrCoins();
-    setCoins(fetched);
-    setCurrentCoin(getRandomCoinName(fetched));
-    setGuessedLetters([]);
-    setLives(5);
-    setScore(0);
-    setGameOver(false);
-  };
+  const handleLetterClick = (letter) => {
+    if (guessedLetters.includes(letter) || gameOver) return;
+    const updatedGuesses = [...guessedLetters, letter];
+    setGuessedLetters(updatedGuesses);
 
-  const guessLetter = (letter) => {
-    const upper = letter.toUpperCase();
-    setGuessedLetters((prev) => [...prev, upper]);
-    if (!currentCoin.includes(upper)) {
+    if (currentCoin.includes(letter)) {
+      const allLettersGuessed = currentCoin
+        .split("")
+        .every((char) => char === " " || updatedGuesses.includes(char));
+
+      if (allLettersGuessed) {
+        const newSessionScore = sessionScore + 100;
+        const newLives = currentIndex === coinNames.length - 1 ? lives : Math.min(lives + 3, 10);
+
+        setSessionScore(newSessionScore);
+        setLives(newLives);
+        setIsRevealed(true);
+
+        setTimeout(() => {
+          if (sessionScore >= 1000) {
+            gameOverState(totalScore + newSessionScore + newLives * 100);
+          } else {
+            setCurrentIndex((i) => i + 1);
+            setGuessedLetters([]);
+            setIsRevealed(false);
+          }
+        }, 3000);
+      }
+    } else {
       const newLives = lives - 1;
       setLives(newLives);
-      if (newLives <= 0) setGameOver(true);
+
+      if (newLives <= 0) {
+        gameOverState(totalScore + sessionScore);
+      }
     }
   };
 
-  const isCorrectGuess = (letter) => currentCoin.includes(letter.toUpperCase());
-  const allLettersGuessed = () => {
-    return currentCoin.split("").every((l) => guessedLetters.includes(l.toUpperCase()));
+  const gameOverState = (updatedTotal) => {
+    setTotalScore(updatedTotal);
+    setLocalState("score", updatedTotal);
+    setGameOver(true);
+    setShowGameOverModal(true);
   };
-
-  useEffect(() => {
-    if (!gameOver && currentCoin && allLettersGuessed()) {
-      const newScore = score + 100;
-      const newLives = Math.min(lives + 1, 5);
-      setScore(newScore);
-      setLives(newLives);
-      setGuessedLetters([]);
-      const next = getRandomCoinName(coins);
-      setCurrentCoin(next);
-    }
-  }, [guessedLetters]);
 
   const resetGame = () => {
-    clearGameState("coinGuessr");
-    initializeGame();
+    router.push("/");
   };
 
   return {
     currentCoin,
     guessedLetters,
     lives,
-    score,
+    sessionScore,
+    totalScore,
     gameOver,
-    guessLetter,
-    isCorrectGuess,
+    isRevealed,
+    showGameOverModal,
+    handleLetterClick,
     resetGame,
+    setShowGameOverModal
   };
 }
