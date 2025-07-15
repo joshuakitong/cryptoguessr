@@ -32,8 +32,8 @@ Mechanics:
 - Start with 5 lives.
 - Each correct answer earns +50 points.
 - Wrong guesses cost 1 life.
-- Game ends when you lose all lives or complete all 20 rounds.
+- Game ends when you lose all lives or get 20 correct answers.
 
 Bonus:
-- Complete 20 rounds to earn a bonus: +100 points for each remaining life.
+- Get 20 correct answers to earn a bonus: +100 points for each remaining life.
 `;
