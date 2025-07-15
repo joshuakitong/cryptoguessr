@@ -16,7 +16,7 @@ export default function GameInfoModal({ show, onClose, info, title }) {
     <div
       onClick={onClose}
       className={`fixed inset-0 z-20 flex items-center justify-center transition-all duration-300
-        ${show ? "opacity-100 backdrop-blur-sm bg-black/30" : "opacity-0 pointer-events-none"}
+        ${show ? "opacity-100 backdrop-blur-[2px] bg-black/30" : "opacity-0 pointer-events-none"}
       `}
     >
       <div

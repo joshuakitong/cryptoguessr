@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 
 export default function GameOverModal({
@@ -12,17 +12,27 @@ export default function GameOverModal({
   onClose,
 }) {
   const modalRef = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setVisible(true), 0);
+  }, []);
 
   const handleClickOutside = (e) => {
     if (modalRef.current && !modalRef.current.contains(e.target)) {
-      onClose();
+      handleClose();
     }
   };
 
   const handleEscape = (e) => {
     if (e.key === "Escape") {
-      onClose();
+      handleClose();
     }
+  };
+
+  const handleClose = () => {
+    setVisible(false);
+    setTimeout(onClose, 300);
   };
 
   useEffect(() => {
@@ -35,13 +45,18 @@ export default function GameOverModal({
   }, []);
 
   return (
-    <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+    <div
+      onClick={handleClose}
+      className={`fixed inset-0 z-20 flex items-center justify-center transition-opacity duration-300 backdrop-blur-[2px] bg-black/30 ${
+        visible ? "opacity-100" : "opacity-0"
+      }`}
+    >
       <div
         ref={modalRef}
         className="relative bg-[#0D1217] p-8 rounded-lg text-center shadow-lg max-w-sm w-full"
       >
         <button
-          onClick={onClose}
+          onClick={handleClose}
           className="absolute top-2 right-2 text-white hover:text-[#f7931a] cursor-pointer transition"
         >
           <X size={24} />
@@ -61,7 +76,8 @@ export default function GameOverModal({
         </p>
 
         <p className="mb-6">
-          Total Score: <span className="text-[#f7931a] font-bold">{totalScore}</span>
+          Total Score:{" "}
+          <span className="text-[#f7931a] font-bold">{totalScore}</span>
         </p>
 
         <button
