@@ -29,27 +29,29 @@ export default function HigherGainsPage() {
   }
 
   return (
-    <div className="flex flex-col items-center gap-4 p-4">
+    <div className="flex flex-col items-center gap-4 p-4 min-h-[calc(100vh-5.75rem)]">
       <Lives currentLives={lives} totalLives={5} />
       <Score score={sessionScore} />
-      <p className="text-white text-md mb-2">
+      <p className="text-center text-lg sm:text-2xl mb-2">
         Which coin has higher <strong>{metric.label}</strong>?
       </p>
-      <div className="flex gap-4 flex-wrap justify-center">
-        <CryptoCompareBox
-          coin={leftCoin}
-          side="left"
-          onClick={() => handleChoice("left")}
-          revealed={revealed}
-          metric={metric.key}
-        />
-        <CryptoCompareBox
-          coin={rightCoin}
-          side="right"
-          onClick={() => handleChoice("right")}
-          revealed={revealed}
-          metric={metric.key}
-        />
+      <div className="w-full overflow-x-auto">
+        <div className="flex justify-center gap-4 sm:scale-100 scale-90">
+          <CryptoCompareBox
+            coin={leftCoin}
+            side="left"
+            onClick={() => handleChoice("left")}
+            revealed={revealed}
+            metric={metric.key}
+          />
+          <CryptoCompareBox
+            coin={rightCoin}
+            side="right"
+            onClick={() => handleChoice("right")}
+            revealed={revealed}
+            metric={metric.key}
+          />
+        </div>
       </div>
       {showGameOverModal && (
         <GameOverModal
