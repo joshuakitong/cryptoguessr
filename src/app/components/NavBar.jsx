@@ -81,7 +81,7 @@ export default function Navbar() {
             <Menu size={28} />
           </button>
 
-          <h1 className={`text-4xl font-bold ${isGamePage ? "mx-auto" : ""}`}>
+          <h1 className={`text-4xl text-center font-bold ${isGamePage ? "mx-auto" : ""}`}>
             {title}
           </h1>
 

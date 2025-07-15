@@ -28,7 +28,7 @@ export default function Score({ score }) {
   }, [score]);
 
   return (
-    <div className="text-lg font-semibold text-[#f7931a]">
+    <div className="text-lg sm:text-xl font-semibold text-[#f7931a]">
       Score: {displayedScore}
     </div>
   );
