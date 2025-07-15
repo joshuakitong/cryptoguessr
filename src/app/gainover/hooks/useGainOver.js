@@ -1,11 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { fetchHigherGainsCoins } from "../utils/fetchHigherGainsCoins";
+import { fetchGainOverCoins } from "../utils/fetchGainOverCoins";
 import { getLocalState, setLocalState } from "@/app/utils/saveLoadUtils";
 import { getRandomValidMetric } from "../utils/metricUtils";
 
-export default function useHigherGains() {
+export default function useGainOver() {
   const [allCoins, setAllCoins] = useState([]);
   const [leftCoin, setLeftCoin] = useState(null);
   const [rightCoin, setRightCoin] = useState(null);
@@ -21,7 +21,7 @@ export default function useHigherGains() {
   const router = useRouter();
 
   useEffect(() => {
-    fetchHigherGainsCoins().then((coins) => {
+    fetchGainOverCoins().then((coins) => {
       //console.log("Fetched coins:", fetchedCoins);
       setAllCoins(coins);
       if (coins.length >= 2) {

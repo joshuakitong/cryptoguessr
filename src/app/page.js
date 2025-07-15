@@ -3,7 +3,7 @@ import Link from "next/link";
 const games = [
   { title: "CoinGuessr", href: "/coinguessr" },
   { title: "Bitcoin Predict", href: "/bitcoinpredict" },
-  { title: "Higher Gains", href: "/highergains" },
+  { title: "Gain Over", href: "/gainover" },
 ];
 
 export default function Home() {

@@ -25,7 +25,7 @@ Bonus:
 - Get 20 correct predictions to earn a bonus: +100 points for each remaining life.
 `;
 
-export const higherGainsGameInfo = `
+export const gainOverGameInfo = `
 Guess which cryptocurrency ranks higher based on one of the following metrics: current price, 24-hour, 7-day, 1-month, or 1-year gain.
 
 Mechanics:

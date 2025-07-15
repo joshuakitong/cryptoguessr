@@ -1,11 +1,11 @@
 "use client";
-import useHigherGains from "./hooks/useHigherGains";
+import useGainOver from "./hooks/useGainOver";
 import Lives from "@/app/components/Lives";
 import Score from "@/app/components/Score";
 import GameOverModal from "@/app/components/GameOverModal";
 import CryptoCompareBox from "./components/CryptoCompareBox";
 
-export default function HigherGainsPage() {
+export default function GainOverPage() {
   const {
     leftCoin,
     rightCoin,
@@ -19,7 +19,7 @@ export default function HigherGainsPage() {
     backToGameMenu,
     setShowGameOverModal,
     showGameOverModal,
-  } = useHigherGains();
+  } = useGainOver();
 
   if (!leftCoin || !rightCoin || !metric) {
     return (

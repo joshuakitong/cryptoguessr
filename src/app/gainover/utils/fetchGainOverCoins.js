@@ -1,4 +1,4 @@
-export async function fetchHigherGainsCoins() {
+export async function fetchGainOverCoins() {
   const res = await fetch("/api/gains");
   if (!res.ok) throw new Error("Failed to fetch coins");
   
