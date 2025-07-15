@@ -17,7 +17,7 @@ export default function CoinGuessrPage() {
     handleLetterClick,
     sessionScore,
     totalScore,
-    resetGame,
+    backToGameMenu,
     setShowGameOverModal,
     showGameOverModal,
   } = useCoinGuessr();
@@ -52,7 +52,7 @@ export default function CoinGuessrPage() {
           totalScore={totalScore}
           message={sessionScore >= 1000 ? "You won the game!" : `The answer is: ${currentCoin}`}
           didWin={sessionScore >= 1000}
-          onRestart={resetGame}
+          onRestart={backToGameMenu}
           onClose={() => setShowGameOverModal(false)}
         />
       )}

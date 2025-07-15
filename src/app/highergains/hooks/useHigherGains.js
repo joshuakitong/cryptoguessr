@@ -121,7 +121,7 @@ export default function useHigherGains() {
     setShowGameOverModal(true);
   };
 
-  const resetGame = () => {
+  const backToGameMenu = () => {
     router.push("/");
   };
 
@@ -135,7 +135,7 @@ export default function useHigherGains() {
     totalScore,
     revealed,
     handleChoice,
-    resetGame,
+    backToGameMenu,
     setShowGameOverModal,
     showGameOverModal,
   };

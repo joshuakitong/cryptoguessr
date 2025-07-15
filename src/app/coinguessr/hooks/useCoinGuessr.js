@@ -69,7 +69,7 @@ export default function useCoinGuessr() {
     setShowGameOverModal(true);
   };
 
-  const resetGame = () => {
+  const backToGameMenu = () => {
     router.push("/");
   };
 
@@ -83,7 +83,7 @@ export default function useCoinGuessr() {
     isRevealed,
     showGameOverModal,
     handleLetterClick,
-    resetGame,
+    backToGameMenu,
     setShowGameOverModal
   };
 }

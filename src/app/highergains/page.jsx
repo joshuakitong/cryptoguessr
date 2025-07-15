@@ -16,7 +16,7 @@ export default function HigherGainsPage() {
     totalScore,
     revealed,
     handleChoice,
-    resetGame,
+    backToGameMenu,
     setShowGameOverModal,
     showGameOverModal,
   } = useHigherGains();
@@ -63,7 +63,7 @@ export default function HigherGainsPage() {
           totalScore={totalScore}
           message={sessionScore >= 1000 ? "You won the game!" : "Game over!"}
           didWin={sessionScore >= 1000}
-          onRestart={resetGame}
+          onRestart={backToGameMenu}
           onClose={() => setShowGameOverModal(false)}
         />
       )}
