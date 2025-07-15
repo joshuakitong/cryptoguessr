@@ -28,8 +28,12 @@ export default function CryptoCompareBox({ coin, onClick, revealed, metric, isCo
         ${revealed ? 'cursor-default' : 'hover:bg-[#2a2d34] cursor-pointer'}
       `}
     >
-      <img src={coin.image} alt={coin.name} className="w-full min-w-42 h-42 sm:h-72 mb-4 object-contain" />
-      <h3 className="font-semibold text-lg truncate px-2 w-full text-center" title={coin.name}>
+      <img src={coin.image} alt={coin.name} className="w-full min-w-42 h-42 sm:h-72 object-contain" />
+      <h3 
+        title={coin.name}
+        className={`font-semibold truncate px-2 w-full text-center transition-all
+          ${revealed ? 'text-lg mt-4 cursor-default' : 'text-3xl mt-6 hover:bg-[#2a2d34] cursor-pointer'}
+        `}>
         {coin.name}
       </h3>
 
