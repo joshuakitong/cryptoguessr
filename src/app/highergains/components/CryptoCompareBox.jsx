@@ -1,14 +1,31 @@
-export default function CryptoCompareBox({ coin, onClick, revealed, metric }) {
+import { useEffect, useState } from "react";
+import AnimatedNumber from "@/app/components/AnimatedNumber";
+
+export default function CryptoCompareBox({ coin, onClick, revealed, metric, isCorrect }) {
+  const [showResultColor, setShowResultColor] = useState(false);
   const value = coin?.[metric];
+
+  useEffect(() => {
+    if (revealed) {
+      const timer = setTimeout(() => setShowResultColor(true), 1500);
+      return () => clearTimeout(timer);
+    } else {
+      setShowResultColor(false);
+    }
+  }, [revealed]);
+
+  const resultColorClass = showResultColor
+    ? isCorrect
+      ? "border-green-500"
+      : "border-red-500"
+    : "border-white";
 
   return (
     <button
       onClick={onClick}
       disabled={revealed}
-      className={`bg-[#1c1f26] hover:bg-[#2a2d34] text-white border border-white 
-        overflow-hidden rounded-lg h-60 sm:h-96 w-42 sm:w-72 
-        flex flex-col items-center transition duration-300 ease-in-out 
-        ${revealed ? 'cursor-default opacity-80' : 'cursor-pointer'}
+      className={`${resultColorClass} bg-[#1c1f26] text-white border-2 rounded-lg h-60 sm:h-96 w-42 sm:w-72 flex flex-col items-center transition duration-300 ease-in-out 
+        ${revealed ? 'cursor-default' : 'hover:bg-[#2a2d34] cursor-pointer'}
       `}
     >
       <img src={coin.image} alt={coin.name} className="w-full min-w-42 h-42 sm:h-72 mb-4 object-contain" />
@@ -16,11 +33,15 @@ export default function CryptoCompareBox({ coin, onClick, revealed, metric }) {
         {coin.name}
       </h3>
 
-      {revealed && (
-        <p className="mt-2 text-[#f7931a] font-bold text-xl">
-          {typeof value === "number" ? `${value.toFixed(2)}${metric.includes("price_change") ? "%" : "$"}` : "N/A"}
-        </p>
-      )}
+      <p className="mt-2 text-[#f7931a] font-bold text-xl min-h-[1.5rem]">
+        {revealed && typeof value === "number" ? (
+          <AnimatedNumber
+            value={value}
+            suffix={metric.includes("price_change") ? "%" : "$"}
+            dynamicDecimals
+          />
+        ) : ""}
+      </p>
     </button>
   );
 }

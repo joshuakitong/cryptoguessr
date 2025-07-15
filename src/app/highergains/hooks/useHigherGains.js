@@ -9,6 +9,7 @@ export default function useHigherGains() {
   const [leftCoin, setLeftCoin] = useState(null);
   const [rightCoin, setRightCoin] = useState(null);
   const [usedCoinIds, setUsedCoinIds] = useState(new Set());
+  const [correctCoin, setCorrectCoin] = useState(null);
   const [metric, setMetric] = useState(null);
   const [lives, setLives] = useState(5);
   const [sessionScore, setSessionScore] = useState(0);
@@ -43,7 +44,8 @@ export default function useHigherGains() {
     const isLeftHigher = leftCoin[metric.key] > rightCoin[metric.key];
     const correct = (choice === "left" && isLeftHigher) || (choice === "right" && !isLeftHigher);
     const correctCoin = isLeftHigher ? leftCoin : rightCoin;
-
+    
+    setCorrectCoin(correctCoin);
     setRevealed(true);
 
     setTimeout(() => {
@@ -105,8 +107,9 @@ export default function useHigherGains() {
         }
       }
 
+      setCorrectCoin(null);
       setRevealed(false);
-    }, 2000);
+    }, 3000);
   };
 
   const endGame = (finalScore) => {
@@ -123,6 +126,7 @@ export default function useHigherGains() {
   return {
     leftCoin,
     rightCoin,
+    correctCoin,
     metric,
     lives,
     sessionScore,

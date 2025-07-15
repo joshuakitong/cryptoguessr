@@ -9,6 +9,7 @@ export default function HigherGainsPage() {
   const {
     leftCoin,
     rightCoin,
+    correctCoin,
     metric,
     lives,
     sessionScore,
@@ -36,13 +37,14 @@ export default function HigherGainsPage() {
         Which coin has higher <strong>{metric.label}</strong>?
       </p>
       <div className="w-full overflow-x-auto">
-        <div className="flex justify-center gap-4 sm:scale-100 scale-90">
+        <div className="flex justify-center gap-4 sm:scale-100 scale-90 py-4">
           <CryptoCompareBox
             coin={leftCoin}
             side="left"
             onClick={() => handleChoice("left")}
             revealed={revealed}
             metric={metric.key}
+            isCorrect={correctCoin?.id === leftCoin.id}
           />
           <CryptoCompareBox
             coin={rightCoin}
@@ -50,6 +52,7 @@ export default function HigherGainsPage() {
             onClick={() => handleChoice("right")}
             revealed={revealed}
             metric={metric.key}
+            isCorrect={correctCoin?.id === rightCoin.id}
           />
         </div>
       </div>
