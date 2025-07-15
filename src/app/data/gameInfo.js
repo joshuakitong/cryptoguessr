@@ -22,7 +22,7 @@ Mechanics:
 - Game ends when you lose all lives or get 10 correct predictions.
 
 Bonus:
-- Get 20 correct predictions to earn a bonus: +100 points for each remaining life.
+- Get 10 correct predictions to earn a bonus: +100 points for each remaining life.
 `;
 
 export const gainOverGameInfo = `
