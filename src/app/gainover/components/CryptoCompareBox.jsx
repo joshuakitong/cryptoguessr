@@ -18,7 +18,7 @@ export default function CryptoCompareBox({ coin, onClick, revealed, metric, isCo
     ? isCorrect
       ? "border-green-500"
       : "border-red-500"
-    : "border-white";
+    : "border-gray-300";
 
   return (
     <button
