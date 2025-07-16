@@ -1,18 +1,27 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export default function StatusMessage({ displayStatusMessage }) {
-  const [visibleMessage, setVisibleMessage] = useState("");
+  const [visibleMessage, setVisibleMessage] = useState(displayStatusMessage);
   const [animate, setAnimate] = useState(false);
+  const firstRender = useRef(true);
 
   useEffect(() => {
-    if (!displayStatusMessage) return;
+    if (firstRender.current) {
+      setVisibleMessage(displayStatusMessage);
+      firstRender.current = false;
+      return;
+    }
 
-    setVisibleMessage(displayStatusMessage);
-    setAnimate(true);
+    if (displayStatusMessage !== visibleMessage) {
+      setVisibleMessage(displayStatusMessage);
+      setAnimate(true);
 
-    const timeout = setTimeout(() => setAnimate(false), 500);
+      const timeout = setTimeout(() => {
+        setAnimate(false);
+      }, 500);
 
-    return () => clearTimeout(timeout);
+      return () => clearTimeout(timeout);
+    }
   }, [displayStatusMessage]);
 
   return (
