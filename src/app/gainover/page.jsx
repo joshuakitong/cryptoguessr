@@ -23,7 +23,7 @@ export default function GainOverPage() {
 
   if (!leftCoin || !rightCoin || !metric) {
     return (
-      <div className="flex justify-center pt-20">
+      <div className="flex justify-center pt-64">
         <div className="h-10 w-10 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
@@ -37,7 +37,7 @@ export default function GainOverPage() {
         Which coin has a higher <strong>{metric.label}</strong>?
       </p>
       <div className="w-full overflow-x-auto">
-        <div className="flex justify-center gap-4 sm:scale-100 scale-90 py-4">
+        <div className="flex justify-center gap-4 py-4">
           <CryptoCompareBox
             coin={leftCoin}
             side="left"

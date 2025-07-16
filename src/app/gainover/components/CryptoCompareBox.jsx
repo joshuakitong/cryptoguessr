@@ -24,11 +24,11 @@ export default function CryptoCompareBox({ coin, onClick, revealed, metric, isCo
     <button
       onClick={onClick}
       disabled={revealed}
-      className={`${resultColorClass} bg-[#1c1f26] text-white border-2 rounded-lg h-60 sm:h-96 w-42 sm:w-72 flex flex-col items-center transition duration-300 ease-in-out 
+      className={`${resultColorClass} bg-[#1c1f26] text-white border-2 rounded-lg overflow-hidden h-68 sm:h-98 w-42 sm:w-72 flex flex-col items-center transition duration-300 ease-in-out
         ${revealed ? 'cursor-default' : 'hover:bg-[#2a2d34] cursor-pointer'}
       `}
     >
-      <img src={coin.image} alt={coin.name} className="w-full min-w-42 h-42 sm:h-72 object-contain" />
+      <img src={coin.image} alt={coin.name} className="w-full min-w-42 h-42 sm:h-72 object-cover" />
       <h3 
         title={coin.name}
         className={`font-semibold truncate px-2 w-full text-center transition-all
