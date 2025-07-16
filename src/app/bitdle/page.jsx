@@ -5,8 +5,6 @@ import Score from "@/app/components/Score";
 import BitcoinPriceDisplay from "./components/BitcoinPriceDisplay";
 import VoteButtons from "./components/VoteButtons";
 import GameOverModal from "@/app/components/GameOverModal";
-import { ArrowUp, ArrowDown, ArrowBigUp, ArrowBigDown } from "lucide-react";
-import AnimatedNumber from "@/app/components/AnimatedNumber";
 import StatusMessage from "./components/AnimatedStatusMessage";
 
 export default function BitdlePage() {
