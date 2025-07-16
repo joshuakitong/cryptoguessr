@@ -81,19 +81,19 @@ export default function useGainOver() {
         setMetric(getRandomValidMetric(nextLeft, nextRight));
 
         if (newScore >= 1000) {
-          endGame(totalScore + newScore + lives * 100);
+          gameOverState(totalScore + newScore + lives * 100);
         }
       } else {
         const newLives = lives - 1;
         setLives(newLives);
 
         if (newLives <= 0) {
-          endGame(totalScore + sessionScore);
+          gameOverState(totalScore + sessionScore);
         } else {
           const newUsed = new Set(usedCoinIds);
           let newCoin = getNewUniqueCoin(newUsed);
           if (!newCoin) {
-            endGame(totalScore + sessionScore);
+            gameOverState(totalScore + sessionScore);
             return;
           }
 
@@ -114,7 +114,7 @@ export default function useGainOver() {
     }, 3000);
   };
 
-  const endGame = (finalScore) => {
+  const gameOverState = (finalScore) => {
     setTotalScore(finalScore);
     setLocalState("score", finalScore);
     setGameOver(true);
