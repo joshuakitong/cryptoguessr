@@ -35,8 +35,8 @@ export default function Lives({ currentLives, totalLives }) {
         return (
           <Heart
             key={index}
-            className={`w-6 h-6 sm:w-8 sm:h-8 transition-colors duration-300 ${
-              isActive ? "text-red-500" : "text-gray-600"
+            className={`w-6 h-6 sm:w-8 sm:h-8 transition-all duration-1000 ${
+              isActive ? "text-red-500" : "text-gray-600 scale-90"
             } ${gainedLife ? "animate-zoom-in" : ""}`}
             fill={isActive ? "currentColor" : "none"}
           />
