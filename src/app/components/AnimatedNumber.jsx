@@ -35,16 +35,28 @@ export default function AnimatedNumber({
   }, [value, duration]);
 
   const getFormatted = (val) => {
-    if (!dynamicDecimals) return val.toFixed(minDecimals);
+    if (!dynamicDecimals) {
+      return val.toLocaleString(undefined, {
+        minimumFractionDigits: minDecimals,
+        maximumFractionDigits: minDecimals,
+      });
+    }
+
     if (val === 0) return "0.00";
 
     const abs = Math.abs(val);
     let decimals = minDecimals;
-    while (decimals < maxDecimals && parseFloat(abs.toFixed(decimals)) === 0) {
+    while (
+      decimals < maxDecimals &&
+      parseFloat(abs.toFixed(decimals)) === 0
+    ) {
       decimals++;
     }
 
-    return val.toFixed(decimals);
+    return val.toLocaleString(undefined, {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    });
   };
 
   return (

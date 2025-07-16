@@ -3,6 +3,11 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { fetchBitdlePrice } from "../utils/fetchBitdlePrice";
 import { getLocalState, setLocalState } from "@/app/utils/saveLoadUtils";
+import { CheckCircle, XCircle } from "lucide-react";
+
+function areMessagesEqual(a, b) {
+  return JSON.stringify(a) === JSON.stringify(b);
+}
 
 export default function useBitdle() {
   const [currentPrice, setCurrentPrice] = useState(null);
@@ -16,12 +21,12 @@ export default function useBitdle() {
   const [gameOver, setGameOver] = useState(false);
   const [showGameOverModal, setShowGameOverModal] = useState(false);
   const [roundOutcome, setRoundOutcome] = useState(null);
-  const [displayStatusMessage, setDisplayStatusMessage] = useState("Waiting for initial price...");
+  const [displayStatusMessage, setDisplayStatusMessage] = useState("Make your prediction...");
 
   const intervalRef = useRef(null);
   const router = useRouter();
 
-  const endGame = useCallback((finalScore) => {
+  const gameOverState = useCallback((finalScore) => {
     setTotalScore(finalScore);
     setLocalState("score", finalScore);
     setGameOver(true);
@@ -49,7 +54,6 @@ export default function useBitdle() {
 
       if (vote === null) {
         outcome = "no_vote";
-        updatedLives -= 1;
       } else if (newPrice === currentPrice) {
         outcome = "unchanged";
       } else if (
@@ -69,21 +73,28 @@ export default function useBitdle() {
     setLives(updatedLives);
     setPreviousPrice(currentPrice);
     setCurrentPrice(newPrice);
+    
+    setTimeout(() => {
+      setRoundOutcome(null);
+      setVote(null);
+      setTimer(60);
+      setCanVote(true);
+    }, 1000);
 
     if (updatedLives <= 0) {
-      endGame(totalScore + updatedScore);
+      gameOverState(totalScore + updatedScore);
       return;
     }
 
     if (updatedScore >= 1000) {
-      endGame(totalScore + updatedScore + updatedLives * 100);
+      gameOverState(totalScore + updatedScore + updatedLives * 100);
       return;
     }
 
     setVote(null);
     setTimer(60);
     setCanVote(true);
-  }, [vote, currentPrice, sessionScore, lives, endGame, totalScore]);
+  }, [vote, currentPrice, sessionScore, lives, gameOverState, totalScore]);
 
   useEffect(() => {
     const initializeGame = async () => {
@@ -119,46 +130,65 @@ export default function useBitdle() {
   }, [handleRoundEnd, gameOver]);
 
   useEffect(() => {
-    if (!previousPrice && !currentPrice) {
-      setDisplayStatusMessage("Waiting for initial price...");
-      return;
-    }
+    let newMessage = null;
 
-    if (timer > 5) {
-      setDisplayStatusMessage(
-        vote === "up"
-          ? "You voted Up"
-          : vote === "down"
-          ? "You voted Down"
-          : "Make your prediction!"
-      );
-    } else if (timer <= 5 && timer > 0) {
-      setDisplayStatusMessage(
-        vote === "up"
-          ? "Vote locked: Up"
-          : vote === "down"
-          ? "Vote locked: Down"
-          : "Can't vote now, waiting for the round to end."
-      );
-    } else if (timer === 60 && roundOutcome !== null) { //this part doesn't work properly yet...
+    if (timer > 5 && timer < 57) {
+      newMessage =
+        vote === "up" ? (
+          <span>
+            You voted <span className="text-green-500 font-semibold">Up</span>.
+          </span>
+        ) : vote === "down" ? (
+          <span>
+            You voted <span className="text-red-500 font-semibold">Down</span>.
+          </span>
+        ) : (
+          "Make your prediction..."
+        );
+    } else if (timer < 5 && timer >= 0) {
+      newMessage =
+        vote === "up" ? (
+          <span>
+            Vote locked: <span className="text-green-500 opacity-70 font-semibold">Up</span>.
+          </span>
+        ) : vote === "down" ? (
+          <span>
+            Vote locked: <span className="text-red-500 opacity-70 font-semibold">Down</span>.
+          </span>
+        ) : (
+          "Can't vote now, waiting for the round to end."
+        );
+    } else if (timer === 60 && roundOutcome !== null) {
       switch (roundOutcome) {
         case "correct":
-          setDisplayStatusMessage("✅ Correct! +100 points");
+          newMessage = (
+            <span className="flex items-center justify-center gap-2 text-green-500 font-semibold">
+              <CheckCircle className="w-6 h-6" />
+              +100 points
+            </span>
+          );
           break;
         case "wrong":
-          setDisplayStatusMessage("❌ Wrong! -1 life");
+          newMessage = (
+            <span className="flex items-center justify-center gap-2 text-red-500 font-semibold">
+              <XCircle className="w-6 h-6" />
+              -1 life
+            </span>
+          );
           break;
         case "unchanged":
-          setDisplayStatusMessage("Price unchanged. No points or lives lost.");
+          newMessage = "Price unchanged. No points or lives lost.";
           break;
         case "no_vote":
-          setDisplayStatusMessage("No vote cast. -1 life");
+          newMessage = "No prediction made.";
           break;
         default:
-          setDisplayStatusMessage("Evaluating round...");
+          newMessage = "Evaluating round...";
       }
-    } else {
-      setDisplayStatusMessage("Loading next round...");
+    }
+
+    if (newMessage !== null && !areMessagesEqual(displayStatusMessage, newMessage)) {
+      setDisplayStatusMessage(newMessage);
     }
   }, [timer, vote, roundOutcome, currentPrice, previousPrice]);
 
