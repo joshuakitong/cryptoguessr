@@ -32,7 +32,7 @@ export default function CryptoCompareBox({ coin, onClick, revealed, metric, isCo
       <h3 
         title={coin.name}
         className={`font-semibold truncate px-2 w-full text-center transition-all
-          ${revealed ? 'text-lg mt-4 cursor-default' : 'text-3xl mt-6 hover:bg-[#2a2d34] cursor-pointer'}
+          ${revealed ? 'text-lg mt-4 cursor-default' : 'text-3xl mt-6 cursor-pointer'}
         `}>
         {coin.name}
       </h3>
