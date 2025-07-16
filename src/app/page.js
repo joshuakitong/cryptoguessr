@@ -18,7 +18,7 @@ export default function Home() {
               <Link
                 key={game.title}
                 href={game.href}
-                className="border-2 border-white hover:text-[#f7931a] hover:border-[#f7931a] hover:scale-105 transition-all duration-300 p-6 rounded-lg text-center text-2xl font-semibold shadow-md h-56 flex flex-col justify-center"
+                className="border-2 border-white hover:text-[#f7931a] hover:border-[#f7931a] hover:scale-105 transition-all duration-300 p-6 rounded-lg text-center text-2xl font-bold shadow-md h-56 flex flex-col justify-center"
               >
                 {game.title}
                 <div className="text-sm text-gray-400 mt-2">[Image Placeholder]</div>
