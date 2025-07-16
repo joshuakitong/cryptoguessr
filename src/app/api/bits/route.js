@@ -3,7 +3,7 @@
 export async function GET() {
   try {
     const res = await fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&precision=4",
+      "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&precision=2",
       {
         headers: {
           Accept: "application/json",
