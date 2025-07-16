@@ -10,7 +10,7 @@ export default function StatusMessage({ displayStatusMessage }) {
     setVisibleMessage(displayStatusMessage);
     setAnimate(true);
 
-    const timeout = setTimeout(() => setAnimate(false), 1000);
+    const timeout = setTimeout(() => setAnimate(false), 500);
 
     return () => clearTimeout(timeout);
   }, [displayStatusMessage]);
