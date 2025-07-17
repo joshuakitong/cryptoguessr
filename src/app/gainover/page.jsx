@@ -11,6 +11,7 @@ export default function GainOverPage() {
     leftCoin,
     rightCoin,
     correctCoin,
+    selectedSide,
     metric,
     lives,
     sessionScore,
@@ -39,7 +40,7 @@ export default function GainOverPage() {
         <p className="text-center text-lg sm:text-2xl mb-2">
           Which coin has a higher <span className="text-[#f7931a] font-bold">{metric.label}</span>?
         </p>
-        <div className="w-full overflow-x-auto">
+        <div className="w-full overflow-x-visible">
           <div className="flex justify-center gap-4 py-4">
             <CryptoCompareBox
               coin={leftCoin}
@@ -48,6 +49,7 @@ export default function GainOverPage() {
               revealed={revealed}
               metric={metric.key}
               isCorrect={correctCoin?.id === leftCoin.id}
+              selected={selectedSide === "left"}
             />
             <CryptoCompareBox
               coin={rightCoin}
@@ -56,6 +58,7 @@ export default function GainOverPage() {
               revealed={revealed}
               metric={metric.key}
               isCorrect={correctCoin?.id === rightCoin.id}
+              selected={selectedSide === "right"}
             />
           </div>
         </div>
@@ -64,7 +67,7 @@ export default function GainOverPage() {
             sessionScore={sessionScore}
             bonusScore={lives * 100}
             totalScore={totalScore}
-            message={sessionScore >= 1000 ? "You won the game!" : "Game over!"}
+            message={sessionScore >= 1000 ? "You won the game!" : "Nice try!"}
             didWin={sessionScore >= 1000}
             onRestart={backToGameMenu}
             onClose={() => setGameOver(true)}

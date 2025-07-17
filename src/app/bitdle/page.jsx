@@ -58,7 +58,7 @@ export default function BitdlePage() {
             sessionScore={sessionScore}
             bonusScore={lives * 100}
             totalScore={totalScore}
-            message={sessionScore >= 1000 ? "You won the game!" : "Game over!"}
+            message={sessionScore >= 1000 ? "You won the game!" : "Nice try!"}
             didWin={sessionScore >= 1000}
             onRestart={backToGameMenu}
             onClose={() => setGameOver(true)}

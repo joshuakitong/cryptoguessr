@@ -14,6 +14,7 @@ export default function useGainOver() {
   const [rightCoin, setRightCoin] = useState(null);
   const [usedCoinIds, setUsedCoinIds] = useState(new Set());
   const [correctCoin, setCorrectCoin] = useState(null);
+  const [selectedSide, setSelectedSide] = useState(null);
   const [metric, setMetric] = useState(null);
   const [lives, setLives] = useState(5);
   const [sessionScore, setSessionScore] = useState(0);
@@ -51,6 +52,8 @@ export default function useGainOver() {
 
   const handleChoice = (choice) => {
     if (revealed || !metric) return;
+
+    setSelectedSide(choice);
 
     const isLeftHigher = leftCoin[metric.key] > rightCoin[metric.key];
     const correct = (choice === "left" && isLeftHigher) || (choice === "right" && !isLeftHigher);
@@ -120,6 +123,7 @@ export default function useGainOver() {
 
       setCorrectCoin(null);
       setRevealed(false);
+      setSelectedSide(null);
     }, 3000);
   };
 
@@ -131,6 +135,7 @@ export default function useGainOver() {
     leftCoin,
     rightCoin,
     correctCoin,
+    selectedSide,
     metric,
     lives,
     sessionScore,

@@ -7,9 +7,9 @@ export default function VoteButtons({ vote, canVote, handleVote }) {
       <button
         onClick={() => handleVote("down")}
         disabled={!canVote}
-        className={`w-26 h-26 flex items-center justify-center rounded-full transition ${
+        className={`w-26 h-26 hover:scale-110 flex items-center justify-center rounded-full transition ${
           vote === "down"
-            ? "bg-red-700 ring-4 ring-red-400"
+            ? "bg-red-700 scale-110 ring-4 ring-red-400"
             : "bg-red-600 hover:bg-red-700"
         } ${!canVote ? "opacity-70 cursor-not-allowed" : "cursor-pointer"}`}
         title="Vote Down"
@@ -20,9 +20,9 @@ export default function VoteButtons({ vote, canVote, handleVote }) {
       <button
         onClick={() => handleVote("up")}
         disabled={!canVote}
-        className={`w-26 h-26 flex items-center justify-center rounded-full transition ${
+        className={`w-26 h-26 hover:scale-110 flex items-center justify-center rounded-full transition ${
           vote === "up"
-            ? "bg-green-700 ring-4 ring-green-400"
+            ? "bg-green-700 scale-110 ring-4 ring-green-400"
             : "bg-green-600 hover:bg-green-700"
         } ${!canVote ? "opacity-70 cursor-not-allowed" : "cursor-pointer"}`}
         title="Vote Up"
