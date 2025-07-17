@@ -2,8 +2,12 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { fetchBitdlePrice } from "../utils/fetchBitdlePrice";
-import { getLocalState, setLocalState } from "@/app/utils/saveLoadUtils";
 import { CheckCircle, XCircle } from "lucide-react";
+import {
+  getTotalScore,
+  saveSessionScore,
+  hasPlayedToday,
+} from "@/app/utils/saveLoadUtils";
 
 function areMessagesEqual(a, b) {
   return JSON.stringify(a) === JSON.stringify(b);
@@ -17,38 +21,36 @@ export default function useBitdle() {
   const [timer, setTimer] = useState(60);
   const [sessionScore, setSessionScore] = useState(0);
   const [lives, setLives] = useState(3);
-  const [totalScore, setTotalScore] = useState(() => getLocalState("score", 0));
-  const [gameOver, setGameOver] = useState(false);
+  const [playedToday, setPlayedToday] = useState(() => hasPlayedToday("bdScores"));
+  const [totalScore, setTotalScore] = useState(0);
   const [showGameOverModal, setShowGameOverModal] = useState(false);
   const [roundOutcome, setRoundOutcome] = useState(null);
   const [displayStatusMessage, setDisplayStatusMessage] = useState("Make your prediction...");
 
-  const intervalRef = useRef(null);
   const router = useRouter();
+  const intervalRef = useRef(null);
+
+  useEffect(() => {
+    setPlayedToday(hasPlayedToday("bdScores"));
+  }, []);
 
   const gameOverState = useCallback((finalScore) => {
-    setTotalScore(finalScore);
-    setLocalState("score", finalScore);
-    setGameOver(true);
+    saveSessionScore(finalScore, "bdScores");
     setShowGameOverModal(true);
+    setTotalScore(getTotalScore("bdScores"));
     if (intervalRef.current) clearInterval(intervalRef.current);
   }, []);
 
   const handleRoundEnd = useCallback(async () => {
     setCanVote(false);
-
     const newPrice = await fetchBitdlePrice();
-    if (newPrice === null) {
-      console.error("Failed to fetch new Bitcoin price.");
-      return;
-    }
+    if (newPrice === null) return console.error("Failed to fetch Bitcoin price.");
 
     let outcome = null;
     let updatedScore = sessionScore;
     let updatedLives = lives;
 
     if (currentPrice !== null) {
-      console.log(newPrice + " : " + currentPrice)
       const priceIncreased = newPrice > currentPrice;
       const priceDecreased = newPrice < currentPrice;
 
@@ -73,7 +75,7 @@ export default function useBitdle() {
     setLives(updatedLives);
     setPreviousPrice(currentPrice);
     setCurrentPrice(newPrice);
-    
+
     setTimeout(() => {
       setRoundOutcome(null);
       setVote(null);
@@ -81,38 +83,23 @@ export default function useBitdle() {
       setCanVote(true);
     }, 1000);
 
-    if (updatedLives <= 0) {
-      gameOverState(totalScore + updatedScore);
-      return;
+    if (updatedLives <= 0 || updatedScore >= 1000) {
+      gameOverState(updatedScore + (updatedLives > 0 ? updatedLives * 100 : 0));
     }
-
-    if (updatedScore >= 1000) {
-      gameOverState(totalScore + updatedScore + updatedLives * 100);
-      return;
-    }
-
-    setVote(null);
-    setTimer(60);
-    setCanVote(true);
-  }, [vote, currentPrice, sessionScore, lives, gameOverState, totalScore]);
+  }, [vote, currentPrice, sessionScore, lives, gameOverState]);
 
   useEffect(() => {
-    const initializeGame = async () => {
-      const initialPrice = await fetchBitdlePrice();
-      if (initialPrice !== null) {
-        setCurrentPrice(initialPrice);
-        setPreviousPrice(initialPrice);
+    const initializePrice = async () => {
+      const price = await fetchBitdlePrice();
+      if (price !== null) {
+        setCurrentPrice(price);
+        setPreviousPrice(price);
       }
     };
-    initializeGame();
+    initializePrice();
   }, []);
 
   useEffect(() => {
-    if (gameOver) {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-      return;
-    }
-
     intervalRef.current = setInterval(() => {
       setTimer((prev) => {
         if (prev <= 1) {
@@ -127,7 +114,7 @@ export default function useBitdle() {
     }, 1000);
 
     return () => clearInterval(intervalRef.current);
-  }, [handleRoundEnd, gameOver]);
+  }, [handleRoundEnd]);
 
   useEffect(() => {
     let newMessage = null;
@@ -162,7 +149,7 @@ export default function useBitdle() {
       switch (roundOutcome) {
         case "correct":
           newMessage = (
-            <span className="flex items-center justify-center gap-2 text-green-500 font-semibold">
+            <span className="flex items-center gap-2 text-green-500 font-semibold">
               <CheckCircle className="w-6 h-6" />
               +100 points
             </span>
@@ -170,7 +157,7 @@ export default function useBitdle() {
           break;
         case "wrong":
           newMessage = (
-            <span className="flex items-center justify-center gap-2 text-red-500 font-semibold">
+            <span className="flex items-center gap-2 text-red-500 font-semibold">
               <XCircle className="w-6 h-6" />
               -1 life
             </span>
@@ -190,13 +177,12 @@ export default function useBitdle() {
     if (newMessage !== null && !areMessagesEqual(displayStatusMessage, newMessage)) {
       setDisplayStatusMessage(newMessage);
     }
-  }, [timer, vote, roundOutcome, currentPrice, previousPrice]);
+  }, [timer, vote, roundOutcome]);
 
-  const handleVote = useCallback((direction) => {
-    if (canVote && !gameOver) {
-      setVote(direction);
-    }
-  }, [canVote, gameOver]);
+  const handleVote = useCallback(
+    (direction) => canVote && setVote(direction),
+    [canVote]
+  );
 
   const backToGameMenu = () => {
     router.push("/");
@@ -211,12 +197,12 @@ export default function useBitdle() {
     lives,
     sessionScore,
     totalScore,
-    gameOver,
     handleVote,
     backToGameMenu,
     showGameOverModal,
-    setShowGameOverModal,
     roundOutcome,
     displayStatusMessage,
+    playedToday,
+    setPlayedToday,
   };
 }

@@ -17,13 +17,22 @@ export default function GainOverPage() {
     revealed,
     handleChoice,
     backToGameMenu,
-    setShowGameOverModal,
     showGameOverModal,
+    playedToday,
+    setPlayedToday,
   } = useGainOver();
+
+  // if (playedToday) {
+  //   return (
+  //     <div className="flex justify-center items-center -translate-y-[2.875rem] min-h-[calc(100vh-5.75rem)]">
+  //       <span>You've already played today. Come back again in: </span>
+  //     </div>
+  //   );
+  // }
 
   if (!leftCoin || !rightCoin || !metric) {
     return (
-      <div className="flex justify-center pt-64">
+      <div className="flex justify-center items-center -translate-y-[2.875rem] min-h-[calc(100vh-5.75rem)]">
         <div className="h-10 w-10 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
@@ -64,7 +73,7 @@ export default function GainOverPage() {
           message={sessionScore >= 1000 ? "You won the game!" : "Game over!"}
           didWin={sessionScore >= 1000}
           onRestart={backToGameMenu}
-          onClose={() => setShowGameOverModal(false)}
+          onClose={() => setPlayedToday(true)}
         />
       )}
     </div>

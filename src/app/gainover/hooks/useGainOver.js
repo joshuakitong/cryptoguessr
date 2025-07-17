@@ -2,8 +2,12 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { fetchGainOverCoins } from "../utils/fetchGainOverCoins";
-import { getLocalState, setLocalState } from "@/app/utils/saveLoadUtils";
 import { getRandomValidMetric } from "../utils/metricUtils";
+import {
+  getTotalScore,
+  saveSessionScore,
+  hasPlayedToday,
+} from "@/app/utils/saveLoadUtils";
 
 export default function useGainOver() {
   const [allCoins, setAllCoins] = useState([]);
@@ -14,15 +18,15 @@ export default function useGainOver() {
   const [metric, setMetric] = useState(null);
   const [lives, setLives] = useState(5);
   const [sessionScore, setSessionScore] = useState(0);
-  const [totalScore, setTotalScore] = useState(() => getLocalState("score", 0));
+  const [totalScore, setTotalScore] = useState(() => getTotalScore("goScores"));
+  const [playedToday, setPlayedToday] = useState(() => hasPlayedToday("goScores"));
   const [revealed, setRevealed] = useState(false);
-  const [gameOver, setGameOver] = useState(false);
   const [showGameOverModal, setShowGameOverModal] = useState(false);
+
   const router = useRouter();
 
   useEffect(() => {
     fetchGainOverCoins().then((coins) => {
-      //console.log("Fetched coins:", fetchedCoins);
       setAllCoins(coins);
       if (coins.length >= 2) {
         const [c1, c2] = coins;
@@ -40,13 +44,19 @@ export default function useGainOver() {
     return available[Math.floor(Math.random() * available.length)];
   };
 
+  const gameOverState = (finalScore) => {
+    saveSessionScore(finalScore, "goScores");
+    setTotalScore(getTotalScore("goScores"));
+    setShowGameOverModal(true);
+  };
+
   const handleChoice = (choice) => {
-    if (revealed || gameOver || !metric) return;
+    if (revealed || !metric) return;
 
     const isLeftHigher = leftCoin[metric.key] > rightCoin[metric.key];
     const correct = (choice === "left" && isLeftHigher) || (choice === "right" && !isLeftHigher);
     const correctCoin = isLeftHigher ? leftCoin : rightCoin;
-    
+
     setCorrectCoin(correctCoin);
     setRevealed(true);
 
@@ -81,19 +91,19 @@ export default function useGainOver() {
         setMetric(getRandomValidMetric(nextLeft, nextRight));
 
         if (newScore >= 1000) {
-          gameOverState(totalScore + newScore + lives * 100);
+          gameOverState(newScore + lives * 100);
         }
       } else {
         const newLives = lives - 1;
         setLives(newLives);
 
         if (newLives <= 0) {
-          gameOverState(totalScore + sessionScore);
+          gameOverState(sessionScore);
         } else {
           const newUsed = new Set(usedCoinIds);
-          let newCoin = getNewUniqueCoin(newUsed);
+          const newCoin = getNewUniqueCoin(newUsed);
           if (!newCoin) {
-            gameOverState(totalScore + sessionScore);
+            gameOverState(sessionScore);
             return;
           }
 
@@ -114,13 +124,6 @@ export default function useGainOver() {
     }, 3000);
   };
 
-  const gameOverState = (finalScore) => {
-    setTotalScore(finalScore);
-    setLocalState("score", finalScore);
-    setGameOver(true);
-    setShowGameOverModal(true);
-  };
-
   const backToGameMenu = () => {
     router.push("/");
   };
@@ -136,7 +139,8 @@ export default function useGainOver() {
     revealed,
     handleChoice,
     backToGameMenu,
-    setShowGameOverModal,
     showGameOverModal,
+    playedToday,
+    setPlayedToday,
   };
 }

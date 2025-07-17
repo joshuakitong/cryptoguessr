@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { fetchCoinGuessrCoins } from "../utils/fetchCoinGuessrCoins";
-import { getLocalState, setLocalState } from "@/app/utils/saveLoadUtils";
+import {
+  getTotalScore,
+  saveSessionScore,
+  hasPlayedToday,
+} from "@/app/utils/saveLoadUtils";
 
 export default function useCoinGuessr() {
   const [coinNames, setCoinNames] = useState([]);
@@ -10,22 +14,28 @@ export default function useCoinGuessr() {
   const [lives, setLives] = useState(10);
   const [isRevealed, setIsRevealed] = useState(false);
   const [sessionScore, setSessionScore] = useState(0);
-  const [totalScore, setTotalScore] = useState(() => getLocalState("score", 0));
-  const [gameOver, setGameOver] = useState(false);
+  const [totalScore, setTotalScore] = useState(() => getTotalScore("cgScores"));
+  const [playedToday, setPlayedToday] = useState(() => hasPlayedToday("cgScores"));
   const [showGameOverModal, setShowGameOverModal] = useState(false);
+
   const router = useRouter();
 
   useEffect(() => {
     fetchCoinGuessrCoins().then((data) => {
-      //console.log("Fetched coins:", data);
       setCoinNames(data);
     });
   }, []);
 
   const currentCoin = coinNames[currentIndex]?.toUpperCase() || "";
 
+  const gameOverState = (finalScore) => {
+    saveSessionScore(finalScore, "cgScores");
+    setTotalScore(getTotalScore("cgScores"));
+    setShowGameOverModal(true);
+  };
+
   const handleLetterClick = (letter) => {
-    if (guessedLetters.includes(letter) || gameOver) return;
+    if (guessedLetters.includes(letter)) return;
     const updatedGuesses = [...guessedLetters, letter];
     setGuessedLetters(updatedGuesses);
 
@@ -36,15 +46,16 @@ export default function useCoinGuessr() {
 
       if (allLettersGuessed) {
         const newSessionScore = sessionScore + 100;
-        const newLives = currentIndex === coinNames.length - 1 ? lives : Math.min(lives + 3, 10);
+        const newLives =
+          currentIndex === coinNames.length - 1 ? lives : Math.min(lives + 3, 10);
 
         setSessionScore(newSessionScore);
         setLives(newLives);
         setIsRevealed(true);
 
         setTimeout(() => {
-          if (sessionScore >= 1000) {
-            gameOverState(totalScore + newSessionScore + newLives * 100);
+          if (newSessionScore >= 1000) {
+            gameOverState(newSessionScore + newLives * 100);
           } else {
             setCurrentIndex((i) => i + 1);
             setGuessedLetters([]);
@@ -57,16 +68,9 @@ export default function useCoinGuessr() {
       setLives(newLives);
 
       if (newLives <= 0) {
-        gameOverState(totalScore + sessionScore);
+        gameOverState(sessionScore);
       }
     }
-  };
-
-  const gameOverState = (updatedTotal) => {
-    setTotalScore(updatedTotal);
-    setLocalState("score", updatedTotal);
-    setGameOver(true);
-    setShowGameOverModal(true);
   };
 
   const backToGameMenu = () => {
@@ -79,11 +83,11 @@ export default function useCoinGuessr() {
     lives,
     sessionScore,
     totalScore,
-    gameOver,
     isRevealed,
     showGameOverModal,
     handleLetterClick,
     backToGameMenu,
-    setShowGameOverModal
+    playedToday,
+    setPlayedToday,
   };
 }
