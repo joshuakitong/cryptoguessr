@@ -46,7 +46,6 @@ export default function GameOverModal({
 
   return (
     <div
-      onClick={handleClose}
       className={`fixed inset-0 z-20 flex items-center justify-center transition-opacity duration-300 backdrop-blur-[2px] bg-black/30 ${
         visible ? "opacity-100" : "opacity-0"
       }`}
