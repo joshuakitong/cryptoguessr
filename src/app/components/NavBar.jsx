@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, X, Info } from "lucide-react";
 import GameInfoModal from "@/app/components/GameInfoModal";
 import { coinGuessrGameInfo, bitdleGameInfo, gainOverGameInfo } from "@/app/data/gameInfo";
@@ -127,9 +128,9 @@ export default function Navbar() {
         } flex flex-col justify-between`}
       >
         <div>
-          <div className="flex justify-between items-center p-4 text-2xl">
+          <div className="flex justify-between items-center p-4">
             <Link
-              className="font-bold hover:text-[#f7931a] hover:underline transition-colors"
+              className="font-bold text-2xl hover:text-[#f7931a] hover:underline transition-colors"
               href="/"
               onClick={() => setOpen(false)}
             >
@@ -143,32 +144,50 @@ export default function Navbar() {
             </button>
           </div>
 
-          <nav className="flex flex-col p-4 space-y-4">
+          <nav className="flex flex-col p-4 space-y-2">
             <Link
-              className="text-semibold text-lg p-2 border-1 border-gray-300 rounded-md hover:text-[#f7931a] hover:border-[#f7931a] hover:scale-105 transition-all"
+              className="flex items-center gap-2 text-semibold text-2xl p-4 border-2 border-gray-300 rounded-md hover:text-[#f7931a] hover:border-[#f7931a] hover:scale-105 transition-all"
               href="/coinguessr"
               onClick={() => setOpen(false)}
             >
-              CoinGuessr
+              <Image
+                src="/images/nav/coinguessr.png"
+                alt="CoinGuessr logo"
+                width={35}
+                height={35}
+              />
+              <span className="ml-2">CoinGuessr</span>
             </Link>
             <Link
-              className="text-semibold text-lg p-2 border-1 border-gray-300 rounded-md hover:text-[#f7931a] hover:border-[#f7931a] hover:scale-105 transition-all"
+              className="flex items-center gap-2 text-semibold text-2xl p-4 border-2 border-gray-300 rounded-md hover:text-[#f7931a] hover:border-[#f7931a] hover:scale-105 transition-all"
               href="/bitdle"
               onClick={() => setOpen(false)}
             >
-              Bitdle
+              <Image
+                src="/images/nav/bitdle.png"
+                alt="Bitdle logo"
+                width={35}
+                height={35}
+              />
+              <span className="ml-2">Bitdle</span>
             </Link>
             <Link
-              className="text-semibold text-lg p-2 border-1 border-gray-300 rounded-md hover:text-[#f7931a] hover:border-[#f7931a] hover:scale-105 transition-all"
+              className="flex items-center gap-2 text-semibold text-2xl p-4 border-2 border-gray-300 rounded-md hover:text-[#f7931a] hover:border-[#f7931a] hover:scale-105 transition-all"
               href="/gainover"
               onClick={() => setOpen(false)}
             >
-              Gain Over
+              <Image
+                src="/images/nav/gainover.png"
+                alt="Gain Over logo"
+                width={35}
+                height={35}
+              />
+              <span className="ml-2">Gain Over</span>
             </Link>
           </nav>
         </div>
 
-        <div className="p-6">
+        <div className="py-6 px-4">
           <nav className="flex flex-col space-y-4 pb-6">
             <Link
               className="text-semibold text-lg hover:text-[#f7931a] transition-colors"

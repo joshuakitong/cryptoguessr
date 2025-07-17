@@ -1,9 +1,10 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const games = [
-  { title: "CoinGuessr", href: "/coinguessr" },
-  { title: "Bitdle", href: "/bitdle" },
-  { title: "Gain Over", href: "/gainover" },
+  { title: "CoinGuessr", href: "/coinguessr", image: "/images/main/coinguessr.png" },
+  { title: "Bitdle", href: "/bitdle", image: "/images/main/bitdle.png" },
+  { title: "Gain Over", href: "/gainover", image: "/images/main/gainover.png" },
 ];
 
 export default function Home() {
@@ -18,10 +19,18 @@ export default function Home() {
               <Link
                 key={game.title}
                 href={game.href}
-                className="border-2 border-gray-300 hover:text-[#f7931a] hover:border-[#f7931a] hover:scale-105 transition-all duration-300 p-6 rounded-lg text-center text-2xl font-bold shadow-md h-56 flex flex-col justify-center"
+                className="border-4 border-gray-300 hover:text-[#f7931a] hover:border-[#f7931a] hover:scale-105 transition-all duration-300 py-6 px-2 rounded-lg text-center text-4xl font-bold shadow-md h-56 flex flex-col justify-center items-center"
               >
                 {game.title}
-                <div className="text-sm text-gray-400 mt-2">[Image Placeholder]</div>
+                <div className="mt-3">
+                  <Image
+                    src={game.image}
+                    alt={`${game.title} logo`}
+                    width={300}
+                    height={150}
+                    className="mx-auto"
+                  />
+                </div>
               </Link>
             ))}
           </div>
