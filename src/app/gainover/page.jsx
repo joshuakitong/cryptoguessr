@@ -32,7 +32,7 @@ export default function GainOverPage() {
   }
 
   return (
-    <PlayGate storageKey="goScores" gameOver={gameOver} sessionScore={sessionScore + bonusScore}>
+    <PlayGate storageKey="goScores" gameOver={gameOver} sessionScore={sessionScore + lives * 100}>
       <div className="flex flex-col items-center gap-4 p-4 min-h-[calc(100vh-5.75rem)]">
         <Lives currentLives={lives} totalLives={5} />
         <Score score={sessionScore} />
