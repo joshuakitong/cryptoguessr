@@ -60,7 +60,7 @@ export default function AnimatedNumber({
   };
 
   return (
-    <span>
+    <span className="font-mono">
       {prefix}
       {getFormatted(animatedValue)}
       {suffix}

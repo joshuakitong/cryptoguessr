@@ -10,7 +10,7 @@ export default function BitcoinPriceDisplay({ currentPrice, previousPrice, timer
 
   const priceDiffPercent =
     priceChanged &&
-    ((Math.abs(currentPrice - previousPrice) / previousPrice) * 100).toFixed(3);
+    ((Math.abs(currentPrice - previousPrice) / previousPrice) * 100);
 
   return (
     <>
@@ -38,11 +38,15 @@ export default function BitcoinPriceDisplay({ currentPrice, previousPrice, timer
               }`}
             >
               {currentPrice > previousPrice ? (
-                <ArrowUp size={16} className="inline" />
+                <ArrowUp size={16} className="inline -mb-0.5" />
               ) : (
-                <ArrowDown size={16} className="inline" />
+                <ArrowDown size={16} className="inline -mb-0.5" />
               )}
-              {priceDiffPercent}%
+              <AnimatedNumber
+                value={priceDiffPercent}
+                suffix="%"
+                minDecimals={3}
+              />
             </div>
           )}
         </div>
