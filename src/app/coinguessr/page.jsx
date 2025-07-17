@@ -31,7 +31,7 @@ export default function CoinGuessrPage() {
   }
 
   return (
-    <PlayGate storageKey="cgScores" gameOver={gameOver} sessionScore={sessionScore}>
+    <PlayGate storageKey="cgScores" gameOver={gameOver} sessionScore={sessionScore + bonusScore}>
       <div className="flex flex-col items-center gap-4 p-4 min-h-[calc(100vh-5.75rem)]">
         <Lives currentLives={lives} totalLives={10} />
         <Score score={sessionScore} />

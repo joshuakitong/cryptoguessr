@@ -36,7 +36,7 @@ export default function BitdlePage() {
   }
 
   return (
-    <PlayGate storageKey="bdScores" gameOver={gameOver} sessionScore={sessionScore}>
+    <PlayGate storageKey="bdScores" gameOver={gameOver} sessionScore={sessionScore + bonusScore}>
       <div className="flex flex-col items-center gap-4 p-4 min-h-[calc(100vh-5.75rem)]">
         <Lives currentLives={lives} totalLives={3} />
         <Score score={sessionScore} />
