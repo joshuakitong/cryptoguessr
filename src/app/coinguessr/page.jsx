@@ -1,11 +1,11 @@
 "use client";
-
 import useCoinGuessr from "./hooks/useCoinGuessr";
 import CryptoNameDisplay from "./components/CryptoNameDisplay";
 import Keyboard from "./components/Keyboard";
 import Lives from "@/app/components/Lives";
 import Score from "@/app/components/Score";
 import GameOverModal from "@/app/components/GameOverModal";
+import PlayGate from "@/app/components/PlayGate";
 
 export default function CoinGuessrPage() {
   const {
@@ -18,52 +18,46 @@ export default function CoinGuessrPage() {
     totalScore,
     backToGameMenu,
     showGameOverModal,
-    playedToday,
-    setPlayedToday,
+    gameOver,
+    setGameOver,
   } = useCoinGuessr();
-
-  // if (playedToday) {
-  //   return (
-  //     <div className="flex justify-center items-center -translate-y-[2.875rem] min-h-[calc(100vh-5.75rem)]">
-  //       <span>You've already played today. Come back again in: </span>
-  //     </div>
-  //   );
-  // }
 
   if (!currentCoin) {
     return (
-      <div className="flex justify-center items-center -translate-y-[2.875rem] min-h-[calc(100vh-5.75rem)]">
+      <div className="flex justify-center items-center pb-[5.75rem] min-h-[calc(100vh-5.75rem)]">
         <div className="h-10 w-10 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col items-center gap-4 p-4 min-h-[calc(100vh-5.75rem)]">
-      <Lives currentLives={lives} totalLives={10} />
-      <Score score={sessionScore} />
-      <CryptoNameDisplay
-        coinName={currentCoin}
-        guessedLetters={guessedLetters}
-        isRevealed={isRevealed}
-      />
-      <Keyboard
-        guessedLetters={guessedLetters}
-        onGuess={handleLetterClick}
-        disabled={isRevealed}
-        coinName={currentCoin}
-      />
-      {showGameOverModal && (
-        <GameOverModal
-          sessionScore={sessionScore}
-          bonusScore={lives * 100}
-          totalScore={totalScore}
-          message={sessionScore >= 1000 ? "You won the game!" : `The answer is: ${currentCoin}`}
-          didWin={sessionScore >= 1000}
-          onRestart={backToGameMenu}
-          onClose={() => setPlayedToday(true)}
+    <PlayGate storageKey="cgScores" gameOver={gameOver} sessionScore={sessionScore}>
+      <div className="flex flex-col items-center gap-4 p-4 min-h-[calc(100vh-5.75rem)]">
+        <Lives currentLives={lives} totalLives={10} />
+        <Score score={sessionScore} />
+        <CryptoNameDisplay
+          coinName={currentCoin}
+          guessedLetters={guessedLetters}
+          isRevealed={isRevealed}
         />
-      )}
-    </div>
+        <Keyboard
+          guessedLetters={guessedLetters}
+          onGuess={handleLetterClick}
+          disabled={isRevealed}
+          coinName={currentCoin}
+        />
+        {showGameOverModal && (
+          <GameOverModal
+            sessionScore={sessionScore}
+            bonusScore={lives * 100}
+            totalScore={totalScore}
+            message={sessionScore >= 1000 ? "You won the game!" : `The answer is: ${currentCoin}`}
+            didWin={sessionScore >= 1000}
+            onRestart={backToGameMenu}
+            onClose={() => setGameOver(true)}
+          />
+        )}
+      </div>
+    </PlayGate>
   );
 }

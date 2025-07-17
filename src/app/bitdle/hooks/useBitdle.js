@@ -6,7 +6,6 @@ import { CheckCircle, XCircle } from "lucide-react";
 import {
   getTotalScore,
   saveSessionScore,
-  hasPlayedToday,
 } from "@/app/utils/saveLoadUtils";
 
 function areMessagesEqual(a, b) {
@@ -21,23 +20,19 @@ export default function useBitdle() {
   const [timer, setTimer] = useState(60);
   const [sessionScore, setSessionScore] = useState(0);
   const [lives, setLives] = useState(3);
-  const [playedToday, setPlayedToday] = useState(() => hasPlayedToday("bdScores"));
   const [totalScore, setTotalScore] = useState(0);
   const [showGameOverModal, setShowGameOverModal] = useState(false);
   const [roundOutcome, setRoundOutcome] = useState(null);
   const [displayStatusMessage, setDisplayStatusMessage] = useState("Make your prediction...");
+  const [gameOver, setGameOver] = useState(false);
 
   const router = useRouter();
   const intervalRef = useRef(null);
 
-  useEffect(() => {
-    setPlayedToday(hasPlayedToday("bdScores"));
-  }, []);
-
   const gameOverState = useCallback((finalScore) => {
     saveSessionScore(finalScore, "bdScores");
     setShowGameOverModal(true);
-    setTotalScore(getTotalScore("bdScores"));
+    setTotalScore(getTotalScore());
     if (intervalRef.current) clearInterval(intervalRef.current);
   }, []);
 
@@ -100,6 +95,11 @@ export default function useBitdle() {
   }, []);
 
   useEffect(() => {
+    if (showGameOverModal) {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      return;
+    }
+
     intervalRef.current = setInterval(() => {
       setTimer((prev) => {
         if (prev <= 1) {
@@ -202,7 +202,7 @@ export default function useBitdle() {
     showGameOverModal,
     roundOutcome,
     displayStatusMessage,
-    playedToday,
-    setPlayedToday,
+    gameOver,
+    setGameOver,
   };
 }

@@ -6,7 +6,6 @@ import { getRandomValidMetric } from "../utils/metricUtils";
 import {
   getTotalScore,
   saveSessionScore,
-  hasPlayedToday,
 } from "@/app/utils/saveLoadUtils";
 
 export default function useGainOver() {
@@ -18,10 +17,10 @@ export default function useGainOver() {
   const [metric, setMetric] = useState(null);
   const [lives, setLives] = useState(5);
   const [sessionScore, setSessionScore] = useState(0);
-  const [totalScore, setTotalScore] = useState(() => getTotalScore("goScores"));
-  const [playedToday, setPlayedToday] = useState(() => hasPlayedToday("goScores"));
+  const [totalScore, setTotalScore] = useState(0);
   const [revealed, setRevealed] = useState(false);
   const [showGameOverModal, setShowGameOverModal] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
 
   const router = useRouter();
 
@@ -46,7 +45,7 @@ export default function useGainOver() {
 
   const gameOverState = (finalScore) => {
     saveSessionScore(finalScore, "goScores");
-    setTotalScore(getTotalScore("goScores"));
+    setTotalScore(getTotalScore());
     setShowGameOverModal(true);
   };
 
@@ -140,7 +139,7 @@ export default function useGainOver() {
     handleChoice,
     backToGameMenu,
     showGameOverModal,
-    playedToday,
-    setPlayedToday,
+    gameOver,
+    setGameOver,
   };
 }

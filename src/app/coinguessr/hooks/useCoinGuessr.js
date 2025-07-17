@@ -4,7 +4,6 @@ import { fetchCoinGuessrCoins } from "../utils/fetchCoinGuessrCoins";
 import {
   getTotalScore,
   saveSessionScore,
-  hasPlayedToday,
 } from "@/app/utils/saveLoadUtils";
 
 export default function useCoinGuessr() {
@@ -14,9 +13,9 @@ export default function useCoinGuessr() {
   const [lives, setLives] = useState(10);
   const [isRevealed, setIsRevealed] = useState(false);
   const [sessionScore, setSessionScore] = useState(0);
-  const [totalScore, setTotalScore] = useState(() => getTotalScore("cgScores"));
-  const [playedToday, setPlayedToday] = useState(() => hasPlayedToday("cgScores"));
+  const [totalScore, setTotalScore] = useState(0);
   const [showGameOverModal, setShowGameOverModal] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
 
   const router = useRouter();
 
@@ -30,7 +29,7 @@ export default function useCoinGuessr() {
 
   const gameOverState = (finalScore) => {
     saveSessionScore(finalScore, "cgScores");
-    setTotalScore(getTotalScore("cgScores"));
+    setTotalScore(getTotalScore());
     setShowGameOverModal(true);
   };
 
@@ -87,7 +86,7 @@ export default function useCoinGuessr() {
     showGameOverModal,
     handleLetterClick,
     backToGameMenu,
-    playedToday,
-    setPlayedToday,
+    gameOver,
+    setGameOver,
   };
 }
