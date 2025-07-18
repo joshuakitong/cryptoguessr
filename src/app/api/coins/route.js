@@ -6,7 +6,7 @@ export async function GET() {
   const data = await res.json();
 
   const filtered = data.filter(
-    coin => /^[A-Za-z\s]+$/.test(coin.name) && coin.name.length < 24
+    coin => /^[A-Za-z\s]+$/.test(coin.name) && coin.name.length < 32
   );
 
   const shuffled = filtered.sort(() => 0.5 - Math.random());
