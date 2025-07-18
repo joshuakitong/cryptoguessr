@@ -22,12 +22,12 @@ export default function Home() {
                 className="border-4 border-gray-300 hover:text-[#f7931a] hover:border-[#f7931a] hover:scale-105 transition-all duration-300 py-6 px-2 rounded-lg text-center text-4xl font-bold shadow-md h-56 flex flex-col justify-center items-center"
               >
                 {game.title}
-                <div className="mt-3">
+                <div className="my-3">
                   <Image
                     src={game.image}
                     alt={`${game.title} logo`}
-                    width={300}
-                    height={150}
+                    width={280}
+                    height={140}
                     className="mx-auto"
                   />
                 </div>
