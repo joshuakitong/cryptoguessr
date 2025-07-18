@@ -52,8 +52,7 @@ export default function BitcoinPriceDisplay({ currentPrice, previousPrice, timer
         </div>
       </div>
       <p className="text-lg sm:text-xl">
-        Predict price action of{" "}
-        <span className="text-[#f7931a] font-semibold">Bitcoin</span> in{" "}
+        Predict <span className="text-[#f7931a] font-semibold">Bitcoin</span>'s price action in the next{" "}
         <span className="font-mono text-xl font-bold">{timer}s</span>
       </p>
     </>
