@@ -45,8 +45,8 @@ export default function CryptoCompareBox({ coin, onClick, revealed, metric, isCo
         {revealed && typeof value === "number" ? (
           <AnimatedNumber
             value={value}
-            prefix={metric.includes("current_price") ?? "$"}
-            suffix={metric.includes("price_change") ?? "%"}
+            prefix={metric.includes("current_price") ? "$" : ""}
+            suffix={metric.includes("price_change") ? "%" : ""}
             dynamicDecimals
           />
         ) : ""}
