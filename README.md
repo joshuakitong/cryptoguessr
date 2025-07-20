@@ -1,6 +1,6 @@
 # CryptoGuessr
 
-This is a cryptocurrency-themed game built with **Next.js**, **Tailwind CSS**, **Node.js**, the **CoinGeck API**, **AWS DynamoDB** and **Cognito**.
+This is a cryptocurrency-themed game built with **Next.js**, **Tailwind CSS**, **Node.js**, the **CoinGeck API**, **Firebase Firestore** and **Authentication**.
 
 Live: [View Site](https://cryptoguessr-amber.vercel.app)
 
