@@ -13,11 +13,11 @@ Bonus:
 `;
 
 export const bitdleGameInfo = `
-Predict whether the price of Bitcoin will go up or down in the next minute.
+Predict whether the price of Bitcoin will go up or down in the next 30 seconds.
 
 Mechanics:
 - Start with 3 lives.
-- Voting closes when the timer reaches 5 seconds.
+- Voting closes when the timer reaches 3 seconds.
 - Each correct prediction earns +100 points.
 - Wrong predictions cost 1 life.
 - Game ends when you lose all lives or get 10 correct predictions.
