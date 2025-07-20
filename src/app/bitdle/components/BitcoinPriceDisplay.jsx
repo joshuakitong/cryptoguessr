@@ -1,15 +1,9 @@
 "use client";
-import { ArrowUp, ArrowDown } from "lucide-react";
+import { ArrowUp, ArrowDown, Equal } from "lucide-react";
 import AnimatedNumber from "@/app/components/AnimatedNumber";
 
 export default function BitcoinPriceDisplay({ currentPrice, previousPrice, timer }) {
-  const priceChanged =
-    currentPrice !== null &&
-    previousPrice !== null &&
-    currentPrice !== previousPrice;
-
   const priceDiffPercent =
-    priceChanged &&
     ((Math.abs(currentPrice - previousPrice) / previousPrice) * 100);
 
   return (
@@ -31,24 +25,24 @@ export default function BitcoinPriceDisplay({ currentPrice, previousPrice, timer
             )}
           </div>
 
-          {priceChanged && (
-            <div
-              className={`absolute left-full top-1/2 -translate-y-1/2 ml-2 text-xs sm:text-sm font-semibold ${
-                currentPrice > previousPrice ? "text-green-500" : "text-red-500"
-              }`}
-            >
-              {currentPrice > previousPrice ? (
-                <ArrowUp size={16} className="inline -mb-0.5" />
-              ) : (
-                <ArrowDown size={16} className="inline -mb-0.5" />
-              )}
-              <AnimatedNumber
-                value={priceDiffPercent}
-                suffix="%"
-                minDecimals={3}
-              />
-            </div>
-          )}
+          <div
+            className={`absolute left-full top-1/2 -translate-y-1/2 ml-2 text-[0.65rem] sm:text-sm font-semibold ${
+              priceDiffPercent === 0
+                ? "text-gray-500"
+                : currentPrice > previousPrice
+                ? "text-green-500"
+                : "text-red-500"
+            }`}
+          >
+            {priceDiffPercent === 0 ? 
+              <Equal size={16} className="inline -mb-0.5 scale-80 sm:scale-100" />
+              : currentPrice > previousPrice ? (
+              <ArrowUp size={16} className="inline -mb-0.5 scale-80 sm:scale-100" />
+            ) : (
+              <ArrowDown size={16} className="inline -mb-0.5 scale-80 sm:scale-100" />
+            )}
+            <AnimatedNumber value={priceDiffPercent} suffix="%" minDecimals={3} />
+          </div>
         </div>
       </div>
       <p className="text-md sm:text-xl">
