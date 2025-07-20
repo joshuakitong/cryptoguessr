@@ -17,7 +17,7 @@ export default function useBitdle() {
   const [previousPrice, setPreviousPrice] = useState(null);
   const [vote, setVote] = useState(null);
   const [canVote, setCanVote] = useState(true);
-  const [timer, setTimer] = useState(30);
+  const [timer, setTimer] = useState(60);
   const [sessionScore, setSessionScore] = useState(0);
   const [lives, setLives] = useState(3);
   const [totalScore, setTotalScore] = useState(0);
@@ -74,7 +74,7 @@ export default function useBitdle() {
     setTimeout(() => {
       setRoundOutcome(null);
       setVote(null);
-      setTimer(30);
+      setTimer(60);
       setCanVote(true);
     }, 1000);
 
@@ -99,9 +99,9 @@ export default function useBitdle() {
       setTimer((prev) => {
         if (prev <= 1) {
           handleRoundEnd();
-          return 30;
+          return 60;
         }
-        if (prev === 3) {
+        if (prev === 5) {
           setCanVote(false);
         }
         return prev - 1;
@@ -127,7 +127,7 @@ export default function useBitdle() {
         ) : (
           "Make your prediction..."
         );
-    } else if (timer < 3 && timer >= 0) {
+    } else if (timer < 5 && timer >= 0) {
       newMessage =
         vote === "up" ? (
           <span>
@@ -140,7 +140,7 @@ export default function useBitdle() {
         ) : (
           "Can't vote now, waiting for the round to end."
         );
-    } else if (timer === 30 && roundOutcome !== null) {
+    } else if (timer === 60 && roundOutcome !== null) {
       switch (roundOutcome) {
         case "correct":
           newMessage = (
