@@ -26,7 +26,7 @@ export default function StatusMessage({ displayStatusMessage }) {
 
   return (
     <div
-      className={`mt-4 text-md sm:text-lg text-center ${
+      className={`mt-2 text-sm sm:text-lg text-center ${
         animate ? "animate-fade-in-out" : ""
       }`}
     >

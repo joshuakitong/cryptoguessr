@@ -14,12 +14,12 @@ export default function BitcoinPriceDisplay({ currentPrice, previousPrice, timer
 
   return (
     <>
-      <div className="text-3xl sm:text-4xl font-semibold mt-24">
+      <div className="text-2xl sm:text-4xl font-semibold mt-24">
         Current price:
       </div>
       <div className="flex flex-col items-center justify-center gap-2 text-center relative">
         <div className="relative inline-block">
-          <div className="text-5xl sm:text-6xl font-bold text-white">
+          <div className="text-4xl sm:text-6xl font-bold text-white">
             {currentPrice !== null ? (
               <AnimatedNumber
                 value={currentPrice}
@@ -51,9 +51,9 @@ export default function BitcoinPriceDisplay({ currentPrice, previousPrice, timer
           )}
         </div>
       </div>
-      <p className="text-lg sm:text-xl">
+      <p className="text-md sm:text-xl">
         Predict <span className="text-[#f7931a] font-semibold">Bitcoin</span>'s price action in the next{" "}
-        <span className="font-mono text-xl font-bold">{timer}s</span>
+        <span className="font-mono text-md sm:text-xl font-bold">{timer}s</span>
       </p>
     </>
   );

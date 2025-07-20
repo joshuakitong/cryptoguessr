@@ -36,7 +36,7 @@ export default function Keyboard({ onGuess, guessedLetters, disabled, coinName }
 
   return (
     <div className="fixed bottom-[4rem] sm:bottom-0 w-full z-10">
-      <div className="flex justify-center items-center w-full h-[150px] sm:h-[150px] md:h-[350px] lg:h-[400px]">
+      <div className="flex justify-center items-center w-full h-[150px] sm:h-[150px] md:h-[300px] lg:h-[350px]">
         <div className="scale-[0.85] sm:scale-100 transition-transform space-y-2">
           {KEYS.map((row, rowIndex) => (
             <div key={rowIndex} className="flex justify-center gap-1">
