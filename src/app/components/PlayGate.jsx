@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getHasPlayedToday, getTodayScore } from "@/app/utils/saveLoadUtils";
 import CountdownToMidnight from "./DailyResetCountdown";
 
-export default function PlayGate({ storageKey, children, gameOver, sessionScore }) {
+export default function PlayGate({ storageKey, children, gameOver }) {
   const [isLoading, setIsLoading] = useState(true);
   const [playedToday, setPlayedToday] = useState(false);
   const [todayScore, setTodayScore] = useState(0);
@@ -14,7 +14,7 @@ export default function PlayGate({ storageKey, children, gameOver, sessionScore 
     setPlayedToday(result);
     setTodayScore(score);
     setIsLoading(false);
-  }, [storageKey]);
+  }, [storageKey, gameOver]);
 
   if (isLoading) {
     return (
@@ -28,7 +28,7 @@ export default function PlayGate({ storageKey, children, gameOver, sessionScore 
     return (
       <div className="flex justify-center items-center pb-[5.75rem] min-h-[calc(100vh-5.75rem)]">
         <span className="text-xl sm:text-2xl text-center">
-          You've scored <span className="text-[#f7931a] font-semibold">{todayScore ?? sessionScore}</span> today
+          You've scored <span className="font-mono text-[#f7931a] font-semibold">{todayScore}</span> today
           <br />
           Play again in <CountdownToMidnight onReset={() => setPlayedToday(false)} />
         </span>
