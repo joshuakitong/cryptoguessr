@@ -6,13 +6,19 @@ import Image from "next/image";
 import { Menu, X, Info } from "lucide-react";
 import GameInfoModal from "@/app/components/GameInfoModal";
 import { coinGuessrGameInfo, bitdleGameInfo, gainOverGameInfo } from "@/app/data/gameInfo";
+import { useUser } from "@/app/context/UserContext";
+import { signOut } from "firebase/auth";
+import { auth } from "@/app/lib/firebaseClient";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [showSideDropdown, setShowSideDropdown] = useState(false);
   const navRef = useRef(null);
   const pathname = usePathname();
   const router = useRouter();
+  const { user, loading } = useUser();
 
   const isHomePage = pathname === "/";
   const isGamePage = ["/coinguessr", "/bitdle", "/gainover"].includes(pathname);
@@ -34,17 +40,17 @@ export default function Navbar() {
   }
 
   function getGameInfo(pathname) {
-  switch (pathname) {
-    case "/coinguessr":
-      return coinGuessrGameInfo;
-    case "/bitdle":
-      return bitdleGameInfo;
-    case "/gainover":
-      return gainOverGameInfo;
-    default:
-      return "";
+    switch (pathname) {
+      case "/coinguessr":
+        return coinGuessrGameInfo;
+      case "/bitdle":
+        return bitdleGameInfo;
+      case "/gainover":
+        return gainOverGameInfo;
+      default:
+        return "";
+    }
   }
-}
 
   const title = getPageTitle(pathname);
 
@@ -72,6 +78,35 @@ export default function Navbar() {
     };
   }, [open]);
 
+  useEffect(() => {
+    if (!showDropdown) return;
+
+    const handleClickOutside = (e) => {
+      if (!e.target.closest(".user-dropdown")) {
+        setShowDropdown(false);
+      }
+      if (navRef.current && !navRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showDropdown]);
+
+  useEffect(() => {
+    if (!showSideDropdown) return;
+
+    const handleClickOutside = (e) => {
+      if (!e.target.closest(".side-user-dropdown")) {
+        setShowSideDropdown(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showSideDropdown]);
+
   return (
     <>
       <div className="top-0 left-0 w-full">
@@ -88,13 +123,49 @@ export default function Navbar() {
           </h1>
 
           {showLoginButton ? (
-            <div className="flex gap-2 items-center">
-              <button 
-                className="bg-[#f7931a] hover:bg-[#e98209] text-white font-bold px-6 py-2 rounded-md cursor-pointer transition"
-                onClick={() => router.push("/auth/login")}
-              >
-                Login
-              </button>
+            <div className="flex gap-2 items-center relative">
+              {loading ? (
+                <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              ) : user ? (
+                <div className="relative">
+                  <button
+                    onClick={() => setShowDropdown((prev) => !prev)}
+                    className="bg-[#f7931a] hover:bg-[#e98209] text-white font-bold px-6 py-2 rounded-md cursor-pointer transition"
+                  >
+                    {user.firestoreDisplayName || "User"}
+                  </button>
+
+                  {showDropdown && (
+                    <div className="user-dropdown absolute right-0 mt-2 bg-gray-100 text-black shadow-lg rounded-md overflow-hidden w-48 z-50">
+                      <button
+                        className="w-full text-left px-4 py-2 hover:bg-gray-200 cursor-pointer"
+                        onClick={() => {
+                          setShowDropdown(false);
+                          router.push("/auth/edit-account");
+                        }}
+                      >
+                        Edit Account Details
+                      </button>
+                      <button
+                        className="w-full text-left px-4 py-2 hover:bg-gray-200 cursor-pointer"
+                        onClick={() => {
+                          setShowDropdown(false);
+                          signOut(auth);
+                        }}
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <button 
+                  className="bg-[#f7931a] hover:bg-[#e98209] text-white font-bold px-6 py-2 rounded-md cursor-pointer transition"
+                  onClick={() => router.push("/auth/login")}
+                >
+                  Login
+                </button>
+              )}
             </div>
           ) : (
             <>
@@ -192,25 +263,68 @@ export default function Navbar() {
           <nav className="flex flex-col space-y-4 pb-6">
             <Link
               className="text-semibold text-lg hover:text-[#f7931a] transition-colors"
-              href="/"
+              href=""
               onClick={() => alert("This feature is coming soon!")}
             >
               Settings
             </Link>
             <Link
               className="text-semibold text-lg hover:text-[#f7931a] transition-colors"
-              href="/"
+              href=""
               onClick={() => alert("This feature is coming soon!")}
             >
               Leaderboards
             </Link>
           </nav>
-          <button
-            className="w-full bg-[#f7931a] hover:bg-[#e98209] text-white font-bold px-6 py-2 rounded-md cursor-pointer transition"
-            onClick={() => router.push("/auth/login")}
-          >
-            Login
-          </button>
+          {loading ? (
+            <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin mx-auto"></div>
+          ) : user ? (
+            <div className="relative">
+              <button
+                onClick={() => {
+                  if (showSideDropdown) {
+                    setShowSideDropdown(false);
+                  } else {
+                    setShowSideDropdown(true);
+                  }
+                }}
+                className="w-full bg-[#f7931a] hover:bg-[#e98209] text-white font-bold px-6 py-2 rounded-md cursor-pointer transition"
+              >
+                {user.firestoreDisplayName || "User"}
+              </button>
+
+              {showSideDropdown && (
+                <div className="side-user-dropdown absolute bottom-12 w-full bg-gray-100 text-black shadow-lg rounded-md overflow-hidden z-50">
+                  <button
+                    className="w-full text-left px-4 py-2 hover:bg-gray-200 cursor-pointer"
+                    onClick={() => setShowSideDropdown((prev) => !prev)}
+                  >
+                    Edit Account Details
+                  </button>
+                  <button
+                    className="w-full text-left px-4 py-2 hover:bg-gray-200 cursor-pointer"
+                    onClick={() => {
+                      setShowSideDropdown(false);
+                      setOpen(false);
+                      signOut(auth);
+                    }}
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <button
+              className="w-full bg-[#f7931a] hover:bg-[#e98209] text-white font-bold px-6 py-2 rounded-md cursor-pointer transition"
+              onClick={() => {
+                router.push("/auth/login");
+                setOpen(false);
+              }}
+            >
+              Login
+            </button>
+          )}
         </div>
       </div>
 
