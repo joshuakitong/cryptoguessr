@@ -130,7 +130,7 @@ export default function Navbar() {
                 <div className="relative">
                   <button
                     onClick={() => setShowDropdown((prev) => !prev)}
-                    className="bg-[#f7931a] hover:bg-[#e98209] text-white font-bold px-6 py-2 rounded-md cursor-pointer transition"
+                    className="bg-[#f7931a] max-w-42 truncate hover:bg-[#e98209] text-white font-bold px-6 py-2 rounded-md cursor-pointer transition"
                   >
                     {user.firestoreDisplayName || "User"}
                   </button>
@@ -297,7 +297,11 @@ export default function Navbar() {
                 <div className="side-user-dropdown absolute bottom-12 w-full bg-gray-100 text-black shadow-lg rounded-md overflow-hidden z-50">
                   <button
                     className="w-full text-left px-4 py-2 hover:bg-gray-200 cursor-pointer"
-                    onClick={() => setShowSideDropdown((prev) => !prev)}
+                    onClick={() => {
+                      setShowSideDropdown(false);
+                      setOpen(false);
+                      router.push("/auth/edit-account");
+                    }}
                   >
                     Edit Account Details
                   </button>
@@ -316,7 +320,7 @@ export default function Navbar() {
             </div>
           ) : (
             <button
-              className="w-full bg-[#f7931a] hover:bg-[#e98209] text-white font-bold px-6 py-2 rounded-md cursor-pointer transition"
+              className="w-full truncate bg-[#f7931a] hover:bg-[#e98209] text-white font-bold px-6 py-2 rounded-md cursor-pointer transition"
               onClick={() => {
                 router.push("/auth/login");
                 setOpen(false);
