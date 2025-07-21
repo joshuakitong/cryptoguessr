@@ -18,7 +18,7 @@ export default function Navbar() {
   const navRef = useRef(null);
   const pathname = usePathname();
   const router = useRouter();
-  const { user, loading } = useUser();
+  const { user, userLoading } = useUser();
 
   const isHomePage = pathname === "/";
   const isGamePage = ["/coinguessr", "/bitdle", "/gainover"].includes(pathname);
@@ -124,7 +124,7 @@ export default function Navbar() {
 
           {showLoginButton ? (
             <div className="flex gap-2 items-center relative">
-              {loading ? (
+              {userLoading ? (
                 <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
               ) : user ? (
                 <div className="relative">
@@ -277,7 +277,7 @@ export default function Navbar() {
               Leaderboards
             </Link>
           </nav>
-          {loading ? (
+          {userLoading ? (
             <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin mx-auto"></div>
           ) : user ? (
             <div className="relative">
