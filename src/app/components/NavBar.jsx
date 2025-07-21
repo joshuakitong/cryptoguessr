@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X, Info } from "lucide-react";
@@ -12,6 +12,7 @@ export default function Navbar() {
   const [showInfo, setShowInfo] = useState(false);
   const navRef = useRef(null);
   const pathname = usePathname();
+  const router = useRouter();
 
   const isHomePage = pathname === "/";
   const isGamePage = ["/coinguessr", "/bitdle", "/gainover"].includes(pathname);
@@ -90,7 +91,7 @@ export default function Navbar() {
             <div className="flex gap-2 items-center">
               <button 
                 className="bg-[#f7931a] hover:bg-[#e98209] text-white font-bold px-6 py-2 rounded-md cursor-pointer transition"
-                onClick={() => alert("This feature is coming soon!")}
+                onClick={() => router.push("/auth/login")}
               >
                 Login
               </button>
@@ -206,7 +207,7 @@ export default function Navbar() {
           </nav>
           <button
             className="w-full bg-[#f7931a] hover:bg-[#e98209] text-white font-bold px-6 py-2 rounded-md cursor-pointer transition"
-            onClick={() => alert("This feature is coming soon!")}
+            onClick={() => router.push("/auth/login")}
           >
             Login
           </button>
