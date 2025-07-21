@@ -1,10 +1,14 @@
+import { db } from "@/app/lib/firebaseClient";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+
+// === Shared ===
 export function getTodayGMT8DateString() {
   const now = new Date();
   now.setUTCHours(now.getUTCHours() + 8);
   return now.toISOString().split("T")[0];
 }
 
-export function getLocalState(key, fallback = null) {
+function getLocalState(key, fallback = {}) {
   if (typeof window !== "undefined") {
     const saved = localStorage.getItem(key);
     return saved ? JSON.parse(saved) : fallback;
@@ -12,44 +16,104 @@ export function getLocalState(key, fallback = null) {
   return fallback;
 }
 
-export function getHasPlayedToday(key) {
-  const allScores = getLocalState(key, {});
-  const today = getTodayGMT8DateString();
-  return Object.hasOwn(allScores, today);
+function setLocalState(key, value) {
+  if (typeof window !== "undefined") {
+    localStorage.setItem(key, JSON.stringify(value));
+  }
 }
 
-export function getTodayScore(key) {
-  const allScores = getLocalState(key, {});
+export async function getHasPlayedToday(uid, gameKey) {
   const today = getTodayGMT8DateString();
-  return allScores.hasOwnProperty(today) ? allScores[today] : null;
+
+  if (!uid) {
+    const local = getLocalState(gameKey);
+    return Object.hasOwn(local, today);
+  }
+
+  const docRef = doc(db, "users", uid, "scores", gameKey);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return Object.hasOwn(docSnap.data(), today);
+  }
+
+  return false;
 }
 
-export function getTotalScore() {
+export async function getTodayScore(uid, gameKey) {
+  const today = getTodayGMT8DateString();
+
+  if (!uid) {
+    const local = getLocalState(gameKey);
+    return local[today] ?? null;
+  }
+
+  const docRef = doc(db, "users", uid, "scores", gameKey);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return docSnap.data()[today] ?? null;
+  }
+
+  return null;
+}
+
+export async function saveSessionScore(uid, score, gameKey) {
+  const today = getTodayGMT8DateString();
+
+  if (!uid) {
+    const local = getLocalState(gameKey);
+    local[today] = score;
+    setLocalState(gameKey, local);
+    return;
+  }
+
+  const docRef = doc(db, "users", uid, "scores", gameKey);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    await updateDoc(docRef, { [today]: score });
+  } else {
+    await setDoc(docRef, { [today]: score });
+  }
+}
+
+export async function getTotalScore(uid) {
   let total = 0;
 
-  if (typeof window !== "undefined") {
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
+  const gameKeys = ["cgScores", "bdScores", "goScores"];
 
-      if (key && key.endsWith("Scores")) {
-        try {
-          const scores = JSON.parse(localStorage.getItem(key));
-          if (scores && typeof scores === "object") {
-            total += Object.values(scores).reduce((sum, score) => sum + score, 0);
+  if (!uid) {
+    if (typeof window !== "undefined") {
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.endsWith("Scores")) {
+          try {
+            const scores = JSON.parse(localStorage.getItem(key));
+            if (scores && typeof scores === "object") {
+              total += Object.values(scores).reduce(
+                (sum, score) => sum + (typeof score === "number" ? score : 0),
+                0
+              );
+            }
+          } catch (e) {
+            console.warn(`Failed to parse local scores from ${key}`, e);
           }
-        } catch (e) {
-          console.warn(`Failed to parse scores from ${key}`, e);
         }
       }
+    }
+    return total;
+  }
+
+  for (const gameKey of gameKeys) {
+    const docRef = doc(db, "users", uid, "scores", gameKey);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      const scores = docSnap.data();
+      total += Object.values(scores).reduce(
+        (sum, score) => sum + (typeof score === "number" ? score : 0),
+        0
+      );
     }
   }
 
   return total;
-}
-
-export function saveSessionScore(score, key) {
-  const allScores = getLocalState(key, {});
-  const today = getTodayGMT8DateString();
-  allScores[today] = score;
-  localStorage.setItem(key, JSON.stringify(allScores));
 }

@@ -1,20 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { getHasPlayedToday, getTodayScore } from "@/app/utils/saveLoadUtils";
 import CountdownToMidnight from "./DailyResetCountdown";
+import { useUser } from "@/app/context/UserContext";
 
 export default function PlayGate({ storageKey, children, gameOver }) {
+  const { user, userLoading } = useUser();
   const [isLoading, setIsLoading] = useState(true);
   const [playedToday, setPlayedToday] = useState(false);
   const [todayScore, setTodayScore] = useState(0);
 
   useEffect(() => {
-    const result = getHasPlayedToday(storageKey);
-    const score = getTodayScore(storageKey);
+    const load = async () => {
+      if (userLoading) return;
 
-    setPlayedToday(result);
-    setTodayScore(score);
-    setIsLoading(false);
-  }, [storageKey, gameOver]);
+      const uid = user?.uid ?? null;
+      const result = await getHasPlayedToday(uid, storageKey);
+      const score = await getTodayScore(uid, storageKey);
+
+      setPlayedToday(result);
+      setTodayScore(score);
+      setIsLoading(false);
+    };
+
+    load();
+  }, [user, userLoading, storageKey, gameOver]);
 
   if (isLoading) {
     return (

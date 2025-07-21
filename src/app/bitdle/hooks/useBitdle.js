@@ -7,12 +7,14 @@ import {
   getTotalScore,
   saveSessionScore,
 } from "@/app/utils/saveLoadUtils";
+import { useUser } from "@/app/context/UserContext";
 
 function areMessagesEqual(a, b) {
   return JSON.stringify(a) === JSON.stringify(b);
 }
 
 export default function useBitdle() {
+  const { user } = useUser();
   const [currentPrice, setCurrentPrice] = useState(null);
   const [previousPrice, setPreviousPrice] = useState(null);
   const [vote, setVote] = useState(null);
@@ -30,10 +32,9 @@ export default function useBitdle() {
   const intervalRef = useRef(null);
 
   const gameOverState = useCallback((finalScore) => {
-    saveSessionScore(finalScore, "bdScores");
+    saveSessionScore(user?.uid, finalScore, "bdScores");
+    setTotalScore(getTotalScore(user?.uid));
     setShowGameOverModal(true);
-    setTotalScore(getTotalScore());
-    if (intervalRef.current) clearInterval(intervalRef.current);
   }, []);
 
   const handleRoundEnd = useCallback(async () => {

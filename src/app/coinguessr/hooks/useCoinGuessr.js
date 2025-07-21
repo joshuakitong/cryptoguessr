@@ -5,8 +5,10 @@ import {
   getTotalScore,
   saveSessionScore,
 } from "@/app/utils/saveLoadUtils";
+import { useUser } from "@/app/context/UserContext";
 
 export default function useCoinGuessr() {
+  const { user } = useUser();
   const [coinNames, setCoinNames] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [guessedLetters, setGuessedLetters] = useState([]);
@@ -28,8 +30,8 @@ export default function useCoinGuessr() {
   const currentCoin = coinNames[currentIndex]?.toUpperCase() || "";
 
   const gameOverState = (finalScore) => {
-    saveSessionScore(finalScore, "cgScores");
-    setTotalScore(getTotalScore());
+    saveSessionScore(user?.uid, finalScore, "cgScores");
+    setTotalScore(getTotalScore(user?.uid));
     setShowGameOverModal(true);
   };
 

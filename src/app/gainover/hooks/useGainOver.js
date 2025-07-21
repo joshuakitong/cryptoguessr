@@ -7,8 +7,10 @@ import {
   getTotalScore,
   saveSessionScore,
 } from "@/app/utils/saveLoadUtils";
+import { useUser } from "@/app/context/UserContext";
 
 export default function useGainOver() {
+  const { user } = useUser();
   const [allCoins, setAllCoins] = useState([]);
   const [leftCoin, setLeftCoin] = useState(null);
   const [rightCoin, setRightCoin] = useState(null);
@@ -45,8 +47,8 @@ export default function useGainOver() {
   };
 
   const gameOverState = (finalScore) => {
-    saveSessionScore(finalScore, "goScores");
-    setTotalScore(getTotalScore());
+    saveSessionScore(user?.uid, finalScore, "goScores");
+    setTotalScore(getTotalScore(user?.uid));
     setShowGameOverModal(true);
   };
 
