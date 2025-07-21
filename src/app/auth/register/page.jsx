@@ -78,6 +78,7 @@ export default function RegisterPage() {
   };
 
   const handleGoogleRegister = async () => {
+    setLoading(true);
     setError("");
     const provider = new GoogleAuthProvider();
 

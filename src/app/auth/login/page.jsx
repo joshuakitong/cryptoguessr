@@ -35,6 +35,7 @@ export default function LoginPage() {
   };
 
   const handleGoogleLogin = async () => {
+    setLoading(true);
     setError("");
     try {
       const provider = new GoogleAuthProvider();
