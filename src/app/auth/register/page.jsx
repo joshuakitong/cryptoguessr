@@ -120,7 +120,7 @@ export default function RegisterPage() {
           disabled={loading}
           placeholder="Email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => {setEmail(e.target.value); setError("");}}
           required
           className="p-2 border rounded"
         />
@@ -129,7 +129,7 @@ export default function RegisterPage() {
           disabled={loading}
           placeholder="Display Name"
           value={displayName}
-          onChange={(e) => setDisplayName(e.target.value)}
+          onChange={(e) => {setDisplayName(e.target.value); setError("");}}
           required
           className="p-2 border rounded"
         />
@@ -139,7 +139,7 @@ export default function RegisterPage() {
             type={showPassword ? "text" : "password"}
             disabled={loading}
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {setPassword(e.target.value); setError("");}}
             placeholder="Password"
             required
             className="p-2 pr-10 border rounded w-full"
@@ -159,7 +159,7 @@ export default function RegisterPage() {
             type={showConfirmPassword ? "text" : "password"}
             disabled={loading}
             value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            onChange={(e) => {setConfirmPassword(e.target.value); setError("");}}
             placeholder="Confirm Password"
             required
             className="p-2 pr-10 border rounded w-full"

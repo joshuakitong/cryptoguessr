@@ -144,7 +144,7 @@ export default function EditAccountPage() {
                 type="text"
                 className="p-2 border rounded w-full"
                 value={displayName}
-                onChange={(e) => setDisplayName(e.target.value)}
+                onChange={(e) => {setDisplayName(e.target.value); setError("");}}
               />
               <button
                 className={`px-4 py-2 rounded text-white transition ${
@@ -181,7 +181,7 @@ export default function EditAccountPage() {
                   placeholder="Old password"
                   className="p-2 pr-10 border rounded w-full"
                   value={oldPassword}
-                  onChange={(e) => setOldPassword(e.target.value)}
+                  onChange={(e) => {setOldPassword(e.target.value); setError("");}}
                 />
                 <button
                   type="button"
@@ -198,7 +198,7 @@ export default function EditAccountPage() {
                   placeholder="New password"
                   className="p-2 pr-10 border rounded w-full"
                   value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
+                  onChange={(e) => {setNewPassword(e.target.value); setError("");}}
                 />
                 <button
                   type="button"
@@ -215,7 +215,7 @@ export default function EditAccountPage() {
                   placeholder="Confirm new password"
                   className="p-2 pr-10 border rounded w-full"
                   value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  onChange={(e) => {setConfirmPassword(e.target.value); setError("");}}
                 />
                 <button
                   type="button"
