@@ -279,7 +279,7 @@ export default function Navbar() {
             </Link>
             <Link
               className="text-semibold text-lg hover:text-[#f7931a] transition-colors"
-              href=""
+              href="/leaderboards"
               onClick={() => setOpen(false)}
             >
               Leaderboards
