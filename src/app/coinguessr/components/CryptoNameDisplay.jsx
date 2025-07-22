@@ -3,7 +3,7 @@ export default function CryptoNameDisplay({ coinName, guessedLetters, isRevealed
 
   return (
     <div className="flex justify-center items-center h-[calc(100vh/2.5)] px-4">
-      <div className="flex flex-wrap justify-center items-center max-w-5xl w-full gap-6 sm:gap-8 md:gap-10 text-white text-4xl font-bold">
+      <div className="flex flex-wrap justify-center items-center max-w-5xl w-full gap-6 sm:gap-8 md:gap-10 text-black dark:text-white text-4xl font-bold">
         {coinName.split(" ").map((word, wordIndex) => (
           <div key={wordIndex} className="flex gap-1 sm:gap-2 md:gap-3">
             {word.split("").map((char, charIndex) => {
@@ -16,7 +16,7 @@ export default function CryptoNameDisplay({ coinName, guessedLetters, isRevealed
                     char === " " ? "border-none" :
                     isRevealed
                     ? "bg-green-600 border-green-400 text-white transition-all duration-500"
-                    : "border-white"
+                    : "border-black dark:border-white"
                   }`}
                 >
                   {char === " " ? "" : showChar ? upperChar : ""}

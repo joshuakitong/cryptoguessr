@@ -19,7 +19,7 @@ export default function Home() {
               <Link
                 key={game.title}
                 href={game.href}
-                className="border-4 border-gray-300 hover:text-[#f7931a] hover:border-[#f7931a] hover:scale-105 transition-all duration-300 py-6 px-2 rounded-lg text-center text-4xl font-bold shadow-md h-56 flex flex-col justify-center items-center"
+                className="border-4 border-gray-800 dark:border-gray-300 hover:text-[#f7931a] hover:border-[#f7931a] hover:scale-105 transition-all duration-300 py-6 px-2 rounded-lg text-center text-4xl font-bold shadow-md h-56 flex flex-col justify-center items-center"
               >
                 {game.title}
                 <div className="my-3">

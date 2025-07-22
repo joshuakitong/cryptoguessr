@@ -123,7 +123,7 @@ export default function EditAccountPage() {
   if (!user || !firestoreUser) {
     return (
       <div className="flex justify-center items-center pb-[5.75rem] min-h-[calc(100vh-5.75rem)]">
-        <div className="h-10 w-10 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+        <div className="h-10 w-10 border-4 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -144,7 +144,7 @@ export default function EditAccountPage() {
                 type="text"
                 className="p-2 border rounded w-full"
                 value={displayName}
-                onChange={(e) => {setDisplayName(e.target.value); setError("");}}
+                onChange={(e) => {setDisplayName(e.target.value); setError(""); setMessage("");}}
               />
               <button
                 className={`px-4 py-2 rounded text-white transition ${
@@ -181,7 +181,7 @@ export default function EditAccountPage() {
                   placeholder="Old password"
                   className="p-2 pr-10 border rounded w-full"
                   value={oldPassword}
-                  onChange={(e) => {setOldPassword(e.target.value); setError("");}}
+                  onChange={(e) => {setOldPassword(e.target.value); setError(""); setMessage("");}}
                 />
                 <button
                   type="button"
@@ -198,7 +198,7 @@ export default function EditAccountPage() {
                   placeholder="New password"
                   className="p-2 pr-10 border rounded w-full"
                   value={newPassword}
-                  onChange={(e) => {setNewPassword(e.target.value); setError("");}}
+                  onChange={(e) => {setNewPassword(e.target.value); setError(""); setMessage("");}}
                 />
                 <button
                   type="button"
@@ -215,7 +215,7 @@ export default function EditAccountPage() {
                   placeholder="Confirm new password"
                   className="p-2 pr-10 border rounded w-full"
                   value={confirmPassword}
-                  onChange={(e) => {setConfirmPassword(e.target.value); setError("");}}
+                  onChange={(e) => {setConfirmPassword(e.target.value); setError(""); setMessage("");}}
                 />
                 <button
                   type="button"

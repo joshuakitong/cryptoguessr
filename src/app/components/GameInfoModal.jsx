@@ -21,7 +21,7 @@ export default function GameInfoModal({ show, onClose, info, title }) {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-[#0D1217] max-w-lg w-full p-6 rounded-lg shadow-md text-white relative"
+        className="bg-[#0d1217] max-w-lg w-full p-6 rounded-lg shadow-md text-white relative"
       >
         <button
           onClick={onClose}

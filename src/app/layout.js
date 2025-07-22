@@ -15,8 +15,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} font-sans antialiased bg-[#0D1217] min-h-screen max-w-7xl mx-auto`}>
+    <html lang="en" className="dark">
+      <body className={`${inter.variable} font-sans antialiased bg-[#0d1217] min-h-screen max-w-7xl mx-auto`}>
         <UserProvider>
           <Navbar />
           {children}

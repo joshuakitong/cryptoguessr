@@ -115,7 +115,7 @@ export default function LoginPage() {
           type="button"
           disabled={loading}
           onClick={handleGoogleLogin}
-          className={`bg-gray-500 py-2 px-4 rounded flex items-center justify-center transition cursor-pointer ${
+          className={`bg-gray-500 text-white py-2 px-4 rounded flex items-center justify-center transition cursor-pointer ${
             loading ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-600"
           }`}
         >

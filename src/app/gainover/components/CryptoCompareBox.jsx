@@ -20,14 +20,14 @@ export default function CryptoCompareBox({ coin, onClick, revealed, metric, isCo
       : "border-red-500"
     : selected
       ? "border-[#f7931a]"
-      : "border-gray-300";
+      : "border-gray-800 dark:border-gray-300";
 
   return (
     <button
       onClick={onClick}
       disabled={revealed}
-      className={`bg-[#1c1f26] text-white border-4 rounded-lg overflow-hidden h-68 sm:h-98 w-42 sm:w-72 flex flex-col items-center transition duration-300 ease-in-out
-        ${revealed ? "cursor-default" : "hover:scale-105 hover:border-[#f7931a] hover:bg-[#2a2d34] cursor-pointer"}
+      className={`bg-[#dfe5ec] dark:bg-[#0d1217] border-4 rounded-lg overflow-hidden h-68 sm:h-98 w-42 sm:w-72 flex flex-col items-center transition duration-300 ease-in-out
+        ${revealed ? "cursor-default" : "hover:scale-105 hover:border-[#f7931a] hover:bg-gray-300 dark:hover:bg-gray-800 cursor-pointer"}
         ${selected ? "scale-105 bg-[#2a2d34]" : "scale-100 bg-[#1c1f26]"}
         ${resultColorClass}
       `}

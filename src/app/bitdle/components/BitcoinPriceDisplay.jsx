@@ -13,7 +13,7 @@ export default function BitcoinPriceDisplay({ currentPrice, previousPrice, timer
       </div>
       <div className="flex flex-col items-center justify-center gap-2 text-center relative">
         <div className="relative inline-block">
-          <div className="text-4xl sm:text-6xl font-bold text-white">
+          <div className="text-4xl sm:text-6xl font-bold">
             {currentPrice !== null ? (
               <AnimatedNumber
                 value={currentPrice}

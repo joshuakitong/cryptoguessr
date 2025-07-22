@@ -28,7 +28,7 @@ export default function PlayGate({ storageKey, children, gameOver }) {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center pb-[5.75rem] min-h-[calc(100vh-5.75rem)]">
-        <div className="h-10 w-10 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+        <div className="h-10 w-10 border-4 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }

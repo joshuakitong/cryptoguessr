@@ -47,24 +47,24 @@ export default function MyScores() {
     <div className="max-w-2xl mx-auto px-4 justify-center items-center min-h-[calc(100vh-5.75rem)]">
       {loading ? (
         <div className="flex justify-center items-center">
-          <div className="h-10 w-10 m-6 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+          <div className="h-10 w-10 m-6 border-4 border-t-transparent rounded-full animate-spin"></div>
         </div>
       ) : (
         <table className="w-full text-left border-collapse text-sm">
           <thead>
             <tr className="bg-[#1c1f26]">
-              <th className="p-2 text-center w-24 rounded-tl-xl border-b border-[#dfe5ec]">Date</th>
+              <th className="p-2 text-center text-white w-24 rounded-tl-xl border-b border-[#dfe5ec]">Date</th>
               {games.map((key) => (
-                <th key={key} className="p-2 w-32 text-center border-b border-[#dfe5ec]">
+                <th key={key} className="p-2 w-32 text-white text-center border-b border-[#dfe5ec]">
                   {gameLabels[key]}
                 </th>
               ))}
-              <th className="p-2 text-center w-24 rounded-tr-xl border-b border-[#dfe5ec]">Total</th>
+              <th className="p-2 text-center text-white w-24 rounded-tr-xl border-b border-[#dfe5ec]">Total</th>
             </tr>
           </thead>
           <tbody>
             {allDates.map((date) => (
-              <tr className="hover:bg-[#2a2d34]" key={date}>
+              <tr className="hover:bg-[#f7931a]/10" key={date}>
                 <td className="p-2 text-center">
                   {new Date(date).toLocaleDateString("en-US", {
                     year: "numeric",

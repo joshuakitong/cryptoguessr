@@ -50,8 +50,8 @@ export default function LeaderboardPage() {
                 gameKey === opt.value
                   ? "bg-[#f7931a] text-black"
                   : loading
-                    ? "cursor-not-allowed"
-                    : "hover:bg-[#2a2e38] cursor-pointer"
+                    ? "cursor-not-allowed text-white"
+                    : "hover:bg-[#2a2e38] cursor-pointer text-white"
               }`}
             >
               {opt.label}
@@ -69,8 +69,8 @@ export default function LeaderboardPage() {
                 timeKey === opt.value
                   ? "bg-[#f7931a] text-black"
                   : loading
-                    ? "cursor-not-allowed"
-                    : "hover:bg-[#2a2e38] cursor-pointer"
+                    ? "cursor-not-allowed text-white"
+                    : "hover:bg-[#2a2e38] cursor-pointer text-white"
               }`}
             >
               {opt.label}
@@ -82,7 +82,7 @@ export default function LeaderboardPage() {
 
       {loading ? (
         <div className="flex justify-center items-center">
-          <div className="h-10 w-10 m-6 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+          <div className="h-10 w-10 m-6 border-4 border-t-transparent rounded-full animate-spin"></div>
         </div>
       ) : (
         <div className="rounded overflow-hidden">
@@ -97,14 +97,8 @@ export default function LeaderboardPage() {
               key={entry.uid}
               className={`grid grid-cols-[15%_65%_20%] bg-[#1c1f26] py-4 my-2 rounded-full ${
                 user?.uid === entry.uid
-                  ? "border border-[#f7931a] font-bold"
-                  : ""
-              } ${
-                entry.rank === 1 ? "font-bold bg-[#FFD700]/30 text-[#FFD700]" : ""
-              } ${
-                entry.rank === 2 ? "font-bold bg-[#C0C0C0]/30 text-[#C0C0C0]" : ""
-              } ${
-                entry.rank === 3 ? "font-bold bg-[#CD7F32]/30 text-[#CD7F32]" : ""
+                  ? "border border-[#f7931a] text-[#f7931a] font-bold"
+                  : "text-white"
               }`}
             >
               <div className="text-center">#{entry.rank}</div>
@@ -115,7 +109,7 @@ export default function LeaderboardPage() {
 
           {showUserRow && (
             <div
-              className={`grid grid-cols-[15%_65%_20%] py-4 my-2 rounded-full border border-[#f7931a] bg-[#1c1f26] font-bold`}
+              className={`grid grid-cols-[15%_65%_20%] py-4 my-2 rounded-full border border-[#f7931a] text-[#f7931a] bg-[#1c1f26] font-bold`}
             >
               <div className="text-center">#{currentUser.rank}</div>
               <div className="truncate">{currentUser.displayName}</div>

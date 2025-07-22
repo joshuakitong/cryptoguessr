@@ -52,11 +52,11 @@ export default function GameOverModal({
     >
       <div
         ref={modalRef}
-        className="relative bg-[#0D1217] p-8 rounded-lg text-center shadow-lg max-w-sm w-full"
+        className="relative bg-[#dfe5ec] dark:bg-[#0d1217] p-8 rounded-lg text-center shadow-lg max-w-sm w-full"
       >
         <button
           onClick={handleClose}
-          className="absolute top-2 right-2 text-white hover:text-[#f7931a] cursor-pointer transition"
+          className="absolute top-2 right-2 hover:text-[#f7931a] cursor-pointer transition"
         >
           <X size={24} />
         </button>
@@ -81,7 +81,7 @@ export default function GameOverModal({
 
         <button
           onClick={onRestart}
-          className="bg-[#f7931a] hover:bg-[#e98209] px-6 py-2 rounded-md font-bold transition shadow-md cursor-pointer"
+          className="bg-[#f7931a] hover:bg-[#e98209] px-6 py-2 rounded-md font-bold transition shadow-md text-white cursor-pointer"
         >
           Back to Game Menu
         </button>

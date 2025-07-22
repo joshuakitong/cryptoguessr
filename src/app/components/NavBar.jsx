@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Menu, X, Info } from "lucide-react";
 import GameInfoModal from "@/app/components/GameInfoModal";
+import DarkModeToggle from "@/app/components/DarkModeToggle";
 import { coinGuessrGameInfo, bitdleGameInfo, gainOverGameInfo } from "@/app/data/gameInfo";
 import { useUser } from "@/app/context/UserContext";
 import { signOut } from "firebase/auth";
@@ -48,6 +49,27 @@ export default function Navbar() {
         return "";
     }
   }
+
+  const navGames = [
+    { 
+      title: "CoinGuessr", 
+      href: "/coinguessr", 
+      image: "/images/nav/coinguessr.png",
+      alt: "CoinGuessr logo"
+    },
+    { 
+      title: "Bitdle", 
+      href: "/bitdle", 
+      image: "/images/nav/bitdle.png", 
+      alt: "Bitdle logo"
+    },
+    { 
+      title: "Gain Over", 
+      href: "/gainover", 
+      image: "/images/nav/gainover.png", 
+      alt: "Gain Over logo"
+    },
+  ];
 
   function getGameInfo(pathname) {
     switch (pathname) {
@@ -123,7 +145,7 @@ export default function Navbar() {
         <div className="w-full mx-auto flex items-center justify-between px-4 py-6">
           <button
             onClick={() => setOpen(true)}
-            className="text-white p-2 cursor-pointer hover:text-[#f7931a] transition-colors"
+            className="p-2 cursor-pointer hover:text-[#f7931a] transition-colors"
           >
             <Menu size={28} />
           </button>
@@ -135,7 +157,7 @@ export default function Navbar() {
           {showLoginButton ? (
             <div className="flex gap-2 items-center relative">
               {userLoading ? (
-                <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                <div className="h-5 w-5 border-2 border-t-transparent rounded-full animate-spin"></div>
               ) : user ? (
                 <div className="relative">
                   <button
@@ -146,9 +168,9 @@ export default function Navbar() {
                   </button>
 
                   {showDropdown && (
-                    <div className="user-dropdown absolute right-0 mt-2 bg-gray-100 text-black shadow-lg rounded-md overflow-hidden w-48 z-50">
+                    <div className="user-dropdown absolute right-0 mt-2 bg-[#0d1217] dark:bg-[#dfe5ec] text-white dark:text-black shadow-lg rounded-md overflow-hidden w-48 z-50">
                       <button
-                        className="w-full text-left px-4 py-2 hover:bg-gray-200 cursor-pointer"
+                        className="w-full text-left px-4 py-2 hover:bg-gray-800 dark:hover:bg-gray-300 cursor-pointer"
                         onClick={() => {
                           setShowDropdown(false);
                           router.push("/auth/edit-account");
@@ -157,7 +179,7 @@ export default function Navbar() {
                         Edit Account Details
                       </button>
                       <button
-                        className="w-full text-left px-4 py-2 hover:bg-gray-200 cursor-pointer"
+                        className="w-full text-left px-4 py-2 hover:bg-gray-800 dark:hover:bg-gray-300 cursor-pointer"
                         onClick={() => {
                           setShowDropdown(false);
                           signOut(auth);
@@ -182,7 +204,7 @@ export default function Navbar() {
             <>
               {isGamePage ? (
                 <button
-                  className="flex items-center justify-center w-[44px] h-[44px] text-white hover:text-[#f7931a] cursor-pointer transition"
+                  className="flex items-center justify-center w-[44px] h-[44px] hover:text-[#f7931a] cursor-pointer transition"
                   onClick={() => setShowInfo(true)}
                 >
                   <Info size={24} />
@@ -206,7 +228,7 @@ export default function Navbar() {
 
       <div
         ref={navRef}
-        className={`fixed top-0 left-0 h-full w-64 bg-[#0D1217] z-30 transform transition-transform duration-500 ${
+        className={`fixed top-0 left-0 h-full w-64 bg-[#dfe5ec] dark:bg-[#0d1217] z-30 transform transition-transform duration-500 ${
           open ? "translate-x-0" : "-translate-x-full"
         } flex flex-col justify-between`}
       >
@@ -221,66 +243,45 @@ export default function Navbar() {
             </Link>
             <button
               onClick={() => setOpen(false)}
-              className="text-white cursor-pointer hover:text-[#f7931a] transition-colors"
+              className="cursor-pointer hover:text-[#f7931a] transition-colors"
             >
               <X size={24} />
             </button>
           </div>
 
           <nav className="flex flex-col p-4 space-y-2">
-            <Link
-              className="flex items-center gap-2 text-semibold text-2xl p-4 border-2 border-gray-300 rounded-md hover:text-[#f7931a] hover:border-[#f7931a] hover:scale-105 transition-all"
-              href="/coinguessr"
-              onClick={() => setOpen(false)}
-            >
-              <Image
-                src="/images/nav/coinguessr.png"
-                alt="CoinGuessr logo"
-                width={35}
-                height={35}
-              />
-              <span className="ml-2">CoinGuessr</span>
-            </Link>
-            <Link
-              className="flex items-center gap-2 text-semibold text-2xl p-4 border-2 border-gray-300 rounded-md hover:text-[#f7931a] hover:border-[#f7931a] hover:scale-105 transition-all"
-              href="/bitdle"
-              onClick={() => setOpen(false)}
-            >
-              <Image
-                src="/images/nav/bitdle.png"
-                alt="Bitdle logo"
-                width={35}
-                height={35}
-              />
-              <span className="ml-2">Bitdle</span>
-            </Link>
-            <Link
-              className="flex items-center gap-2 text-semibold text-2xl p-4 border-2 border-gray-300 rounded-md hover:text-[#f7931a] hover:border-[#f7931a] hover:scale-105 transition-all"
-              href="/gainover"
-              onClick={() => setOpen(false)}
-            >
-              <Image
-                src="/images/nav/gainover.png"
-                alt="Gain Over logo"
-                width={35}
-                height={35}
-              />
-              <span className="ml-2">Gain Over</span>
-            </Link>
+            {navGames.map((game) => (
+              <Link
+                key={game.title}
+                href={game.href}
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-2 font-semibold text-2xl p-4 border-2 rounded-md hover:text-[#f7931a] hover:border-[#f7931a] 
+                hover:scale-105 transition-all border-gray-800 dark:border-gray-300"
+              >
+                <Image
+                  src={game.image}
+                  alt={game.alt}
+                  width={35}
+                  height={35}
+                />
+                <span className="ml-2">{game.title}</span>
+              </Link>
+            ))}
           </nav>
         </div>
 
         <div className="py-6 px-4">
           <nav className="flex flex-col space-y-4 pb-6">
+            <DarkModeToggle />
             <Link
-              className="text-semibold text-lg hover:text-[#f7931a] transition-colors"
+              className="font-semibold text-lg hover:text-[#f7931a] transition-colors"
               href="/my-scores"
               onClick={() => setOpen(false)}
             >
               My Scores
             </Link>
             <Link
-              className="text-semibold text-lg hover:text-[#f7931a] transition-colors"
+              className="font-semibold text-lg hover:text-[#f7931a] transition-colors"
               href="/leaderboards"
               onClick={() => setOpen(false)}
             >
@@ -288,7 +289,7 @@ export default function Navbar() {
             </Link>
           </nav>
           {userLoading ? (
-            <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin mx-auto"></div>
+            <div className="h-5 w-5 border-2 border-t-transparent rounded-full animate-spin mx-auto"></div>
           ) : user ? (
             <div className="relative">
               <button
@@ -305,9 +306,9 @@ export default function Navbar() {
               </button>
 
               {showSideDropdown && (
-                <div className="side-user-dropdown absolute bottom-12 w-full bg-gray-100 text-black shadow-lg rounded-md overflow-hidden z-50">
+                <div className="side-user-dropdown absolute bottom-12 w-full bg-[#0d1217] dark:bg-[#dfe5ec] text-white dark:text-black shadow-lg rounded-md overflow-hidden z-50">
                   <button
-                    className="w-full text-left px-4 py-2 hover:bg-gray-200 cursor-pointer"
+                    className="w-full text-left px-4 py-2 hover:bg-gray-800 dark:hover:bg-gray-300 cursor-pointer"
                     onClick={() => {
                       setShowSideDropdown(false);
                       setOpen(false);
@@ -317,7 +318,7 @@ export default function Navbar() {
                     Edit Account Details
                   </button>
                   <button
-                    className="w-full text-left px-4 py-2 hover:bg-gray-200 cursor-pointer"
+                    className="w-full text-left px-4 py-2 hover:bg-gray-800 dark:hover:bg-gray-300 cursor-pointer"
                     onClick={() => {
                       setShowSideDropdown(false);
                       setOpen(false);

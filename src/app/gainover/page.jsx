@@ -28,7 +28,7 @@ export default function GainOverPage() {
   if (!leftCoin || !rightCoin || !metric) {
     return (
       <div className="flex justify-center items-center pb-[5.75rem] min-h-[calc(100vh-5.75rem)]">
-        <div className="h-10 w-10 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+        <div className="h-10 w-10 border-4 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -66,8 +66,8 @@ export default function GainOverPage() {
         {isSavingGame && (
           <div className="fixed inset-0 bg-black/30 backdrop-blur-[2px] flex items-center justify-center z-50">
             <div className="text-center">
-              <div className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full mx-auto mb-2" />
-              <p className="text-white font-semibold">Saving score...</p>
+              <div className="animate-spin h-5 w-5 border-2 border-t-transparent rounded-full mx-auto mb-2" />
+              <p className="font-semibold">Saving score...</p>
             </div>
           </div>
         )}
