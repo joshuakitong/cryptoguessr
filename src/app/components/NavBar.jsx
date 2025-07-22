@@ -40,6 +40,8 @@ export default function Navbar() {
         return "Register";
       case "/auth/edit-account":
         return "Edit Account Details";
+      case "/my-scores":
+        return "My Scores";
       case "/leaderboards":
         return "Leaderboards";
       default:
@@ -276,6 +278,13 @@ export default function Navbar() {
               onClick={() => alert("This feature is coming soon!")}
             >
               Settings
+            </Link>
+            <Link
+              className="text-semibold text-lg hover:text-[#f7931a] transition-colors"
+              href="/my-scores"
+              onClick={() => setOpen(false)}
+            >
+              My Scores
             </Link>
             <Link
               className="text-semibold text-lg hover:text-[#f7931a] transition-colors"
