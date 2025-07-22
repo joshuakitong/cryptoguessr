@@ -107,7 +107,7 @@ export default function LoginPage() {
             loading ? "opacity-50 cursor-not-allowed" : "hover:bg-[#e98209]"
           }`}
         >
-          {loading ? <Loader className="animate-spin" size={20} /> : "Login"}
+          {loading ? <Loader className="animate-spin" size={24} /> : "Login"}
         </button>
       
 
@@ -119,7 +119,7 @@ export default function LoginPage() {
             loading ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-600"
           }`}
         >
-          {loading ? <Loader className="animate-spin" size={20} /> : "Continue with Google"}
+          {loading ? <Loader className="animate-spin" size={24} /> : "Continue with Google"}
         </button>
         <div className="text-sm text-center">
           Don't have an account?{" "}

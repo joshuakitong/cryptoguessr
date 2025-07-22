@@ -183,7 +183,7 @@ export default function RegisterPage() {
             loading ? "opacity-50 cursor-not-allowed" : "hover:bg-[#e98209]"
           }`}
         >
-          {loading ? <Loader className="animate-spin" size={20} /> : "Register"}
+          {loading ? <Loader className="animate-spin" size={24} /> : "Register"}
         </button>
 
         <button
@@ -194,7 +194,7 @@ export default function RegisterPage() {
             loading ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-600"
           }`}
         >
-          {loading ? <Loader className="animate-spin" size={20} /> : "Continue with Google"}
+          {loading ? <Loader className="animate-spin" size={24} /> : "Continue with Google"}
         </button>
 
         <div className="text-sm text-center">

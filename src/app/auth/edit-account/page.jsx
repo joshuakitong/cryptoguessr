@@ -155,7 +155,7 @@ export default function EditAccountPage() {
                 onClick={handleDisplayNameUpdate}
                 disabled={loading || displayName === firestoreUser.displayName}
               >
-                {loading ? <Loader size={16} className="animate-spin" /> : "Save"}
+                {loading ? <Loader size={24} className="animate-spin" /> : "Save"}
               </button>
             </div>
           ) : (
@@ -233,7 +233,7 @@ export default function EditAccountPage() {
                   loading ? "opacity-50 cursor-not-allowed" : "hover:bg-[#e98209]"
                 }`}
               >
-                {loading ? <Loader className="animate-spin" size={20} /> : "Save Password"}
+                {loading ? <Loader className="animate-spin" size={24} /> : "Save Password"}
               </button>
             </div>
           ) : (
