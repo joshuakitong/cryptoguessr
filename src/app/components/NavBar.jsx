@@ -274,13 +274,6 @@ export default function Navbar() {
           <nav className="flex flex-col space-y-4 pb-6">
             <Link
               className="text-semibold text-lg hover:text-[#f7931a] transition-colors"
-              href=""
-              onClick={() => alert("This feature is coming soon!")}
-            >
-              Settings
-            </Link>
-            <Link
-              className="text-semibold text-lg hover:text-[#f7931a] transition-colors"
               href="/my-scores"
               onClick={() => setOpen(false)}
             >
