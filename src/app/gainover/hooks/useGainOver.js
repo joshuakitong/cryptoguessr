@@ -24,13 +24,14 @@ export default function useGainOver() {
   const [revealed, setRevealed] = useState(false);
   const [showGameOverModal, setShowGameOverModal] = useState(false);
   const [gameOver, setGameOver] = useState(false);
+  const [isSavingGame, setIsSavingGame] = useState(false);
 
   const router = useRouter();
 
   useEffect(() => {
     fetchGainOverCoins().then((coins) => {
       setAllCoins(coins);
-      if (coins.length >= 2) {
+      if (coins?.length >= 2) {
         const [c1, c2] = coins;
         setLeftCoin(c1);
         setRightCoin(c2);
@@ -46,14 +47,19 @@ export default function useGainOver() {
     return available[Math.floor(Math.random() * available.length)];
   };
 
-  const gameOverState = (finalScore) => {
-    saveSessionScore(user?.uid, finalScore, "goScores");
-    setTotalScore(getTotalScore(user?.uid));
+  const gameOverState = async (finalScore) => {
+    setIsSavingGame(true);
+    
+    await saveSessionScore(user?.uid, finalScore, "goScores");
+    const total = await getTotalScore(user?.uid);
+    setTotalScore(total);
+
+    setIsSavingGame(false);
     setShowGameOverModal(true);
   };
 
   const handleChoice = (choice) => {
-    if (revealed || !metric) return;
+    if (revealed || !metric || showGameOverModal) return;
 
     setSelectedSide(choice);
 
@@ -148,5 +154,6 @@ export default function useGainOver() {
     showGameOverModal,
     gameOver,
     setGameOver,
+    isSavingGame,
   };
 }

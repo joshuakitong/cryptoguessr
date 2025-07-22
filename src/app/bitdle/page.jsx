@@ -24,8 +24,8 @@ export default function BitdlePage() {
     displayStatusMessage,
     gameOver,
     setGameOver,
+    isSavingGame,
   } = useBitdle();
-
 
   if (currentPrice === null) {
     return (
@@ -52,7 +52,14 @@ export default function BitdlePage() {
 
           <StatusMessage displayStatusMessage={displayStatusMessage} />
         </div>
-
+        {isSavingGame && (
+          <div className="fixed inset-0 bg-black/30 backdrop-blur-[2px] flex items-center justify-center z-50">
+            <div className="text-center">
+              <div className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full mx-auto mb-2" />
+              <p className="text-white font-semibold">Saving score...</p>
+            </div>
+          </div>
+        )}
         {showGameOverModal && (
           <GameOverModal
             sessionScore={sessionScore}

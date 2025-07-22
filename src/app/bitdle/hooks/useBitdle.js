@@ -27,20 +27,27 @@ export default function useBitdle() {
   const [roundOutcome, setRoundOutcome] = useState(null);
   const [displayStatusMessage, setDisplayStatusMessage] = useState("Make your prediction...");
   const [gameOver, setGameOver] = useState(false);
-
+  const [isSavingGame, setIsSavingGame] = useState(false);
+  
   const router = useRouter();
   const intervalRef = useRef(null);
 
-  const gameOverState = useCallback((finalScore) => {
-    saveSessionScore(user?.uid, finalScore, "bdScores");
-    setTotalScore(getTotalScore(user?.uid));
+  const gameOverState = async (finalScore) => {
+    setCanVote(false);
+    setIsSavingGame(true);
+
+    await saveSessionScore(user?.uid, finalScore, "bdScores");
+    const total = await getTotalScore(user?.uid);
+    setTotalScore(total);
+
+    setIsSavingGame(false);
     setShowGameOverModal(true);
-  }, []);
+  };
 
   const handleRoundEnd = useCallback(async () => {
     setCanVote(false);
     const newPrice = await fetchBitdlePrice();
-    if (newPrice === null) return console.error("Failed to fetch Bitcoin price.");
+    if (newPrice === null) return alert("Failed to fetch Bitcoin price: Too many requests. Please try again in a minute.");
 
     let outcome = null;
     let updatedScore = sessionScore;
@@ -87,7 +94,7 @@ export default function useBitdle() {
   useEffect(() => {
     const initializePrice = async () => {
       const price = await fetchBitdlePrice();
-      if (price !== null) {
+      if (price) {
         setCurrentPrice(price);
         setPreviousPrice(price);
       }
@@ -200,5 +207,6 @@ export default function useBitdle() {
     displayStatusMessage,
     gameOver,
     setGameOver,
+    isSavingGame,
   };
 }

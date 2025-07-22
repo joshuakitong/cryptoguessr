@@ -18,6 +18,7 @@ export default function useCoinGuessr() {
   const [totalScore, setTotalScore] = useState(0);
   const [showGameOverModal, setShowGameOverModal] = useState(false);
   const [gameOver, setGameOver] = useState(false);
+  const [isSavingGame, setIsSavingGame] = useState(false);
 
   const router = useRouter();
 
@@ -27,16 +28,21 @@ export default function useCoinGuessr() {
     });
   }, []);
 
-  const currentCoin = coinNames[currentIndex]?.toUpperCase() || "";
+  const currentCoin = coinNames?.[currentIndex]?.toUpperCase() || "";
 
-  const gameOverState = (finalScore) => {
-    saveSessionScore(user?.uid, finalScore, "cgScores");
-    setTotalScore(getTotalScore(user?.uid));
+  const gameOverState = async (finalScore) => {
+    setIsSavingGame(true);
+
+    await saveSessionScore(user?.uid, finalScore, "cgScores");
+    const total = await getTotalScore(user?.uid);
+    setTotalScore(total);
+
+    setIsSavingGame(false);
     setShowGameOverModal(true);
   };
 
   const handleLetterClick = (letter) => {
-    if (guessedLetters.includes(letter)) return;
+    if (guessedLetters.includes(letter) || showGameOverModal) return;
     const updatedGuesses = [...guessedLetters, letter];
     setGuessedLetters(updatedGuesses);
 
@@ -90,5 +96,6 @@ export default function useCoinGuessr() {
     backToGameMenu,
     gameOver,
     setGameOver,
+    isSavingGame,
   };
 }
