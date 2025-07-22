@@ -129,9 +129,7 @@ export default function EditAccountPage() {
   }
 
   return (
-    <div className="flex flex-col gap-6 items-center justify-center pb-[5.75rem] min-h-[calc(100vh-5.75rem)]">
-      <h1 className="text-2xl font-bold">Edit Account Details</h1>
-
+    <div className="flex flex-col gap-6 items-center justify-center pb-[5.75rem] min-h-[calc(100vh-5.75rem)] px-4">
       <div className="flex flex-col gap-4 w-full max-w-sm">
         <div>
           <label className="font-semibold">Email</label>

@@ -34,6 +34,14 @@ export default function Navbar() {
         return "Bitdle";
       case "/gainover":
         return "Gain Over";
+      case "/auth/login":
+        return "Login";
+      case "/auth/register":
+        return "Register";
+      case "/auth/edit-account":
+        return "Edit Account Details";
+      case "/leaderboards":
+        return "Leaderboards";
       default:
         return "";
     }
@@ -118,7 +126,7 @@ export default function Navbar() {
             <Menu size={28} />
           </button>
 
-          <h1 className={`text-4xl text-center font-bold ${isGamePage ? "mx-auto" : ""}`}>
+          <h1 className={`text-4xl text-center font-bold mx-auto`}>
             {title}
           </h1>
 
@@ -272,7 +280,7 @@ export default function Navbar() {
             <Link
               className="text-semibold text-lg hover:text-[#f7931a] transition-colors"
               href=""
-              onClick={() => alert("This feature is coming soon!")}
+              onClick={() => setOpen(false)}
             >
               Leaderboards
             </Link>

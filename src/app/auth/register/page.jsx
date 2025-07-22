@@ -113,9 +113,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex flex-col gap-6 items-center justify-center pb-[5.75rem] min-h-[calc(100vh-5.75rem)]">
-      <h1 className="text-2xl font-bold">Register</h1>
-
+    <div className="flex flex-col gap-6 items-center justify-center pb-[5.75rem] min-h-[calc(100vh-5.75rem)] px-4">
       <form onSubmit={handleRegister} className="flex flex-col gap-4 w-full max-w-sm">
         <input
           type="email"
