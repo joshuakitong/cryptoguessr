@@ -159,7 +159,7 @@ export default function Navbar() {
                         onClick={() => {
                           setShowDropdown(false);
                           signOut(auth);
-                          router.push("/");
+                          router.push("/auth/login");
                         }}
                       >
                         Logout
@@ -320,7 +320,7 @@ export default function Navbar() {
                       setShowSideDropdown(false);
                       setOpen(false);
                       signOut(auth);
-                      router.push("/");
+                      router.push("/auth/login");
                     }}
                   >
                     Logout
