@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useUser } from "@/app/context/UserContext";
+import { fetchLeaderboard } from "./utils/fetchLeaderboard";
 
 const gameOptions = [
   { label: "All Games", value: "all" },
@@ -23,22 +24,12 @@ export default function LeaderboardPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchLeaderboard = async () => {
-      setLoading(true);
-      try {
-        const res = await fetch(
-          `/api/leaders?gameKey=${gameKey}&timeKey=${timeKey}`
-        );
-        const data = await res.json();
-        setLeaderboard(data);
-      } catch (err) {
-        alert("Failed to fetch leaderboard:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
+    setLoading(true);
 
-    fetchLeaderboard();
+    fetchLeaderboard(gameKey, timeKey)
+      .then((data) => setLeaderboard(data))
+      .catch((err) => alert("Failed to fetch leaderboard: " + err.message))
+      .finally(() => setLoading(false));
   }, [gameKey, timeKey]);
 
   const top10 = leaderboard.slice(0, 10);
@@ -47,15 +38,15 @@ export default function LeaderboardPage() {
     currentUser && currentUser.rank > 10 && !top10.some((u) => u.uid === user?.uid);
 
   return (
-    <div className="max-w-lg mx-auto px-4 justify-center items-center pb-[5.75rem] min-h-[calc(100vh-5.75rem)]">
-      <div className="flex flex-wrap justify-center gap-4 mb-6">
-        <div className="flex gap-1 bg-[#1c1f26] p-1 rounded-4xl">
+    <div className="max-w-lg mx-auto px-4 justify-center items-center min-h-[calc(100vh-5.75rem)]">
+      <div className="flex flex-wrap justify-center gap-4 mb-2">
+        <div className="flex gap-1 bg-[#1c1f26] p-1 rounded-full">
           {gameOptions.map((opt) => (
             <button
               key={opt.value}
               disabled={loading}
               onClick={() => setGameKey(opt.value)}
-              className={`px-3 py-1 rounded-4xl text-sm transition truncate ${
+              className={`px-3 py-1 rounded-full text-sm transition truncate ${
                 gameKey === opt.value
                   ? "bg-[#f7931a] text-black"
                   : loading
@@ -68,13 +59,13 @@ export default function LeaderboardPage() {
           ))}
         </div>
 
-        <div className="flex gap-1 bg-[#1c1f26] p-1 rounded-4xl">
+        <div className="flex gap-1 bg-[#1c1f26] p-1 rounded-full">
           {timeOptions.map((opt) => (
             <button
               key={opt.value}
               disabled={loading}
               onClick={() => setTimeKey(opt.value)}
-              className={`px-3 py-1 rounded-4xl text-sm transition truncate ${
+              className={`px-3 py-1 rounded-full text-sm transition truncate ${
                 timeKey === opt.value
                   ? "bg-[#f7931a] text-black"
                   : loading
@@ -95,16 +86,16 @@ export default function LeaderboardPage() {
         </div>
       ) : (
         <div className="rounded overflow-hidden">
-          <div className="grid grid-cols-[15%_65%_20%] font-semibold py-2">
-            <div className="text-center">Rank</div>
+          <div className="grid grid-cols-[15%_65%_20%] font-semibold py-2 text-center">
+            <div>Rank</div>
             <div>Name</div>
-            <div className="text-center">Score</div>
+            <div>Score</div>
           </div>
           
           {top10.map((entry) => (
             <div
               key={entry.uid}
-              className={`grid grid-cols-[15%_65%_20%] bg-[#1c1f26] py-4 my-2 rounded-4xl ${
+              className={`grid grid-cols-[15%_65%_20%] bg-[#1c1f26] py-4 my-2 rounded-full ${
                 user?.uid === entry.uid
                   ? "border border-[#f7931a] font-bold"
                   : ""
@@ -124,7 +115,7 @@ export default function LeaderboardPage() {
 
           {showUserRow && (
             <div
-              className={`grid grid-cols-[15%_65%_20%] py-4 my-2 rounded-4xl border border-[#f7931a] bg-[#1c1f26] font-bold`}
+              className={`grid grid-cols-[15%_65%_20%] py-4 my-2 rounded-full border border-[#f7931a] bg-[#1c1f26] font-bold`}
             >
               <div className="text-center">#{currentUser.rank}</div>
               <div className="truncate">{currentUser.displayName}</div>
