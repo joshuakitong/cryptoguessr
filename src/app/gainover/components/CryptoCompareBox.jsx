@@ -28,7 +28,7 @@ export default function CryptoCompareBox({ coin, onClick, revealed, metric, isCo
       disabled={revealed}
       className={`bg-[#1c1f26] text-white border-4 rounded-lg overflow-hidden h-68 sm:h-98 w-42 sm:w-72 flex flex-col items-center transition duration-300 ease-in-out
         ${revealed ? "cursor-default" : "hover:scale-105 hover:border-[#f7931a] hover:bg-[#2a2d34] cursor-pointer"}
-        ${selected ? "scale-105 border-[#f7931a]" : ""}
+        ${selected ? "scale-105 bg-[#2a2d34]" : "scale-100 bg-[#1c1f26]"}
         ${resultColorClass}
       `}
     >
