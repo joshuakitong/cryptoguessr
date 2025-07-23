@@ -1,6 +1,6 @@
 # CryptoGuessr
 
-This is a cryptocurrency-themed game built with **Next.js**, **Tailwind CSS**, **Node.js**, the **CoinGeck API**, **Vercel**, **Firebase Firestore** and **Authentication**, featuring three interactive mini-games that challenge users on their crypto knowledge through trivia, guessing games, and market data with persistent player scores stored in Firestore.
+This is a cryptocurrency-themed game built with **Next.js**, **Tailwind CSS**, **Node.js**, the **CoinGeck API**, **Vercel**, and **Firebase**, featuring three interactive mini-games that challenge users on their crypto knowledge through trivia, guessing games, and market data with persistent player scores stored in Firestore.
 
 Live: [View Site](https://cryptoguessr-amber.vercel.app)
 
